@@ -1,23 +1,27 @@
-import React from 'react';
-import { useCalendar } from '../../contexts/CalendarContext';
-import { 
-  getCalendarDays, 
-  isDateInCurrentMonth, 
-  isToday, 
-  getEventsForDate 
-} from '../../utils/dateUtils';
-import EventCard from './EventCard';
+import React from "react";
+import { useEventManagement } from "../../hooks/useEventManagement";
+import { useCalendarNavigation } from "../../hooks/useCalendarNavigation";
+import {
+  getCalendarDays,
+  isDateInCurrentMonth,
+  isToday,
+} from "../../utils/dateUtils";
+import EventCard from "./EventCard";
 
 const MonthView: React.FC = () => {
-  const { state, dispatch } = useCalendar();
-  const { currentDate, events } = state;
-  
+  const { currentDate } = useCalendarNavigation();
+  const { events, getEventsForDate, openEventModal } = useEventManagement();
+
   const calendarDays = getCalendarDays(currentDate);
-  const dayNames = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+  const dayNames = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
 
   const handleDateClick = (date: Date) => {
-    dispatch({ type: 'SET_SELECTED_DATE', payload: date });
-    dispatch({ type: 'OPEN_EVENT_MODAL' });
+    openEventModal();
+  };
+
+  const handleEventClick = (event: any, e: React.MouseEvent) => {
+    e.stopPropagation();
+    openEventModal(event);
   };
 
   return (
@@ -37,18 +41,18 @@ const MonthView: React.FC = () => {
       {/* Calendar grid */}
       <div className="grid grid-cols-7 flex-1">
         {calendarDays.map((date, index) => {
-          const dayEvents = getEventsForDate(events, date);
+          const dayEvents = getEventsForDate(date);
           const isCurrentMonth = isDateInCurrentMonth(date, currentDate);
           const isTodayDate = isToday(date);
-          
+
           return (
             <div
               key={index}
               className={`
                 border-r border-b border-calendar-border min-h-[120px] p-2 cursor-pointer
                 transition-colors duration-200 hover:bg-calendar-hover
-                ${!isCurrentMonth ? 'bg-muted/20' : 'bg-background'}
-                ${isTodayDate ? 'bg-calendar-today' : ''}
+                ${!isCurrentMonth ? "bg-muted/20" : "bg-background"}
+                ${isTodayDate ? "bg-calendar-today" : ""}
               `}
               onClick={() => handleDateClick(date)}
             >
@@ -56,17 +60,18 @@ const MonthView: React.FC = () => {
                 className={`
                   text-sm font-medium mb-1 w-8 h-8 flex items-center justify-center rounded-full
                   transition-colors duration-200
-                  ${!isCurrentMonth 
-                    ? 'text-calendar-other-month' 
-                    : isTodayDate 
-                      ? 'bg-calendar-primary text-white' 
-                      : 'text-foreground hover:bg-calendar-hover'
+                  ${
+                    !isCurrentMonth
+                      ? "text-calendar-other-month"
+                      : isTodayDate
+                      ? "bg-calendar-primary text-white"
+                      : "text-foreground hover:bg-calendar-hover"
                   }
                 `}
               >
                 {date.getDate()}
               </div>
-              
+
               {/* Events for this day */}
               <div className="space-y-1">
                 {dayEvents.slice(0, 3).map((event) => (
@@ -74,13 +79,10 @@ const MonthView: React.FC = () => {
                     key={event.id}
                     event={event}
                     isCompact={true}
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      dispatch({ type: 'OPEN_EVENT_MODAL', payload: event });
-                    }}
+                    onClick={(e) => handleEventClick(event, e)}
                   />
                 ))}
-                
+
                 {dayEvents.length > 3 && (
                   <div className="text-xs text-muted-foreground px-2 py-1">
                     +{dayEvents.length - 3} more
