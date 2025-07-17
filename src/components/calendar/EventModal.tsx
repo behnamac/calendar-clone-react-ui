@@ -52,15 +52,14 @@ const EventModal: React.FC = () => {
           color: editingEvent.color,
         });
       } else {
-        // Creating new event - set default values
-        const today = new Date().toISOString().split("T")[0];
+        // Creating new event - set empty values for clean form
         setFormData({
           title: "",
           description: "",
-          startDate: today,
-          startTime: "09:00",
-          endDate: today,
-          endTime: "10:00",
+          startDate: "",
+          startTime: "",
+          endDate: "",
+          endTime: "",
           allDay: false,
           color: "blue",
         });
@@ -88,7 +87,33 @@ const EventModal: React.FC = () => {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
 
-    if (!formData.title || !formData.startDate) return;
+    // Validate required fields
+    if (!formData.title.trim()) {
+      alert("Please enter an event title");
+      return;
+    }
+
+    if (!formData.startDate) {
+      alert("Please select a start date");
+      return;
+    }
+
+    if (!formData.endDate) {
+      alert("Please select an end date");
+      return;
+    }
+
+    // For non-all-day events, validate time fields
+    if (!formData.allDay) {
+      if (!formData.startTime) {
+        alert("Please select a start time");
+        return;
+      }
+      if (!formData.endTime) {
+        alert("Please select an end time");
+        return;
+      }
+    }
 
     const startDateTime = formData.allDay
       ? new Date(formData.startDate + "T00:00")
@@ -98,9 +123,15 @@ const EventModal: React.FC = () => {
       ? new Date(formData.endDate + "T23:59")
       : new Date(formData.endDate + "T" + formData.endTime);
 
+    // Validate that end date/time is after start date/time
+    if (endDateTime <= startDateTime) {
+      alert("End date/time must be after start date/time");
+      return;
+    }
+
     const eventData = {
-      title: formData.title,
-      description: formData.description,
+      title: formData.title.trim(),
+      description: formData.description.trim(),
       startDate: startDateTime,
       endDate: endDateTime,
       color: formData.color,

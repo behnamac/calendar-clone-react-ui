@@ -5,6 +5,13 @@ import {
   Calendar as CalendarIcon,
 } from "lucide-react";
 import { Button } from "../ui/button";
+import {
+  Select,
+  SelectTrigger,
+  SelectContent,
+  SelectItem,
+  SelectValue,
+} from "../ui/select";
 import { useCalendarNavigation } from "../../hooks/useCalendarNavigation";
 import { useEventManagement } from "../../hooks/useEventManagement";
 import { CalendarView } from "../../types/calendar";
@@ -18,6 +25,7 @@ const CalendarHeader: React.FC = () => {
     navigateNext,
     setView,
     getCurrentMonthName,
+    getCurrentYear,
     getCurrentWeekRange,
   } = useCalendarNavigation();
 
@@ -25,6 +33,8 @@ const CalendarHeader: React.FC = () => {
 
   const formatHeaderDate = () => {
     switch (currentView) {
+      case "year":
+        return getCurrentYear();
       case "month":
         return getCurrentMonthName();
       case "week":
@@ -101,25 +111,21 @@ const CalendarHeader: React.FC = () => {
         </h2>
       </div>
 
-      {/* Right section - View toggles and create button */}
+      {/* Right section - View select and create button */}
       <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4">
-        {/* View toggles - Side by side on desktop, stacked on mobile */}
-        <div className="flex items-center bg-muted rounded-lg p-1 w-full sm:w-auto">
-          {(["month", "week", "day"] as CalendarView[]).map((view) => (
-            <Button
-              key={view}
-              variant={currentView === view ? "secondary" : "ghost"}
-              size="sm"
-              onClick={() => handleViewChange(view)}
-              className={`flex-1 sm:flex-none px-4 py-2 text-sm font-medium capitalize transition-smooth ${
-                currentView === view
-                  ? "bg-background shadow-sm"
-                  : "hover:bg-calendar-hover"
-              }`}
-            >
-              {view}
-            </Button>
-          ))}
+        {/* View select dropdown */}
+        <div className="w-full sm:w-auto min-w-[120px]">
+          <Select value={currentView} onValueChange={handleViewChange}>
+            <SelectTrigger className="capitalize">
+              <SelectValue />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="year">Year</SelectItem>
+              <SelectItem value="month">Month</SelectItem>
+              <SelectItem value="week">Week</SelectItem>
+              <SelectItem value="day">Day</SelectItem>
+            </SelectContent>
+          </Select>
         </div>
 
         <Button

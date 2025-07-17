@@ -53,6 +53,10 @@ export const useCalendarNavigation = () => {
     });
   }, [state.currentDate]);
 
+  const getCurrentYear = useCallback(() => {
+    return state.currentDate.getFullYear().toString();
+  }, [state.currentDate]);
+
   const getCurrentWeekRange = useCallback(() => {
     const startOfWeek = new Date(state.currentDate);
     const dayOfWeek = startOfWeek.getDay();
@@ -79,6 +83,13 @@ export const useCalendarNavigation = () => {
     return { startOfMonth, endOfMonth };
   }, [state.currentDate]);
 
+  const getCurrentYearRange = useCallback(() => {
+    const startOfYear = new Date(state.currentDate.getFullYear(), 0, 1);
+    const endOfYear = new Date(state.currentDate.getFullYear(), 11, 31);
+
+    return { startOfYear, endOfYear };
+  }, [state.currentDate]);
+
   return {
     currentDate: state.currentDate,
     currentView: state.currentView,
@@ -90,7 +101,9 @@ export const useCalendarNavigation = () => {
     navigateToWeek,
     setView,
     getCurrentMonthName,
+    getCurrentYear,
     getCurrentWeekRange,
     getCurrentMonthRange,
+    getCurrentYearRange,
   };
 };

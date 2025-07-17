@@ -4,11 +4,11 @@ export interface CalendarEvent {
   description?: string;
   startDate: Date;
   endDate: Date;
-  color: 'blue' | 'green' | 'red' | 'purple' | 'orange';
+  color: "blue" | "green" | "red" | "purple" | "orange";
   allDay?: boolean;
 }
 
-export type CalendarView = 'month' | 'week' | 'day';
+export type CalendarView = "year" | "month" | "week" | "day";
 
 export interface CalendarState {
   currentDate: Date;

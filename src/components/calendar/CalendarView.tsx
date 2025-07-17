@@ -1,5 +1,6 @@
 import React from "react";
 import { useCalendarNavigation } from "../../hooks/useCalendarNavigation";
+import YearView from "./YearView";
 import MonthView from "./MonthView";
 import WeekView from "./WeekView";
 import DayView from "./DayView";
@@ -9,6 +10,8 @@ const CalendarView: React.FC = () => {
 
   const renderView = () => {
     switch (currentView) {
+      case "year":
+        return <YearView />;
       case "month":
         return <MonthView />;
       case "week":

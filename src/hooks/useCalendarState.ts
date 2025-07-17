@@ -111,7 +111,9 @@ const calendarReducer = (
 
     case "NAVIGATE_PREVIOUS":
       const prevDate = new Date(state.currentDate);
-      if (state.currentView === "month") {
+      if (state.currentView === "year") {
+        prevDate.setFullYear(prevDate.getFullYear() - 1);
+      } else if (state.currentView === "month") {
         prevDate.setMonth(prevDate.getMonth() - 1);
       } else if (state.currentView === "week") {
         prevDate.setDate(prevDate.getDate() - 7);
@@ -122,7 +124,9 @@ const calendarReducer = (
 
     case "NAVIGATE_NEXT":
       const nextDate = new Date(state.currentDate);
-      if (state.currentView === "month") {
+      if (state.currentView === "year") {
+        nextDate.setFullYear(nextDate.getFullYear() + 1);
+      } else if (state.currentView === "month") {
         nextDate.setMonth(nextDate.getMonth() + 1);
       } else if (state.currentView === "week") {
         nextDate.setDate(nextDate.getDate() + 7);
