@@ -1,5 +1,7 @@
 import React, { createContext, useContext } from "react";
 import { CalendarProvider, useCalendar } from "../../contexts/CalendarContext";
+import MonthView from "./MonthView";
+import EventModal from "./EventModal";
 
 interface CalendarContextValue {
   // This will be provided by the CalendarProvider
@@ -107,8 +109,6 @@ const CalendarMonthView: React.FC<CalendarMonthViewProps> = ({ children }) => {
 };
 
 const DefaultCalendarMonthView: React.FC = () => {
-  // Import the existing MonthView component
-  const MonthView = require("./MonthView").default;
   return <MonthView />;
 };
 
@@ -123,8 +123,6 @@ const CalendarEventModal: React.FC<CalendarEventModalProps> = ({
 };
 
 const DefaultCalendarEventModal: React.FC = () => {
-  // Import the existing EventModal component
-  const EventModal = require("./EventModal").default;
   return <EventModal />;
 };
 
