@@ -29,51 +29,60 @@ const EventModal: React.FC = () => {
     color: "blue" as CalendarEvent["color"],
   });
 
+  // Reset form when modal opens/closes or editingEvent changes
   useEffect(() => {
-    if (editingEvent) {
-      const startDate = new Date(editingEvent.startDate);
-      const endDate = new Date(editingEvent.endDate);
+    if (isEventModalOpen) {
+      if (editingEvent) {
+        // Editing existing event - populate form with event data
+        const startDate = new Date(editingEvent.startDate);
+        const endDate = new Date(editingEvent.endDate);
 
-      setFormData({
-        title: editingEvent.title,
-        description: editingEvent.description || "",
-        startDate: startDate.toISOString().split("T")[0],
-        startTime: editingEvent.allDay
-          ? ""
-          : startDate.toTimeString().slice(0, 5),
-        endDate: endDate.toISOString().split("T")[0],
-        endTime: editingEvent.allDay ? "" : endDate.toTimeString().slice(0, 5),
-        allDay: editingEvent.allDay || false,
-        color: editingEvent.color,
-      });
+        setFormData({
+          title: editingEvent.title,
+          description: editingEvent.description || "",
+          startDate: startDate.toISOString().split("T")[0],
+          startTime: editingEvent.allDay
+            ? ""
+            : startDate.toTimeString().slice(0, 5),
+          endDate: endDate.toISOString().split("T")[0],
+          endTime: editingEvent.allDay
+            ? ""
+            : endDate.toTimeString().slice(0, 5),
+          allDay: editingEvent.allDay || false,
+          color: editingEvent.color,
+        });
+      } else {
+        // Creating new event - set default values
+        const today = new Date().toISOString().split("T")[0];
+        setFormData({
+          title: "",
+          description: "",
+          startDate: today,
+          startTime: "09:00",
+          endDate: today,
+          endTime: "10:00",
+          allDay: false,
+          color: "blue",
+        });
+      }
     } else {
-      // Set default values for new event
-      const today = new Date().toISOString().split("T")[0];
+      // Modal is closed - reset form to empty state
       setFormData({
         title: "",
         description: "",
-        startDate: today,
-        startTime: "09:00",
-        endDate: today,
-        endTime: "10:00",
+        startDate: "",
+        startTime: "",
+        endDate: "",
+        endTime: "",
         allDay: false,
         color: "blue",
       });
     }
-  }, [editingEvent]);
+  }, [isEventModalOpen, editingEvent]);
 
   const handleClose = () => {
     closeEventModal();
-    setFormData({
-      title: "",
-      description: "",
-      startDate: "",
-      startTime: "",
-      endDate: "",
-      endTime: "",
-      allDay: false,
-      color: "blue",
-    });
+    // Form will be reset by the useEffect when modal closes
   };
 
   const handleSubmit = (e: React.FormEvent) => {
