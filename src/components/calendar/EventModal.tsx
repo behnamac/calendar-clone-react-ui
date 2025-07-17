@@ -1,84 +1,93 @@
-import React, { useState, useEffect } from 'react';
-import { X, Trash2 } from 'lucide-react';
-import { Button } from '../ui/button';
-import { Input } from '../ui/input';
-import { Textarea } from '../ui/textarea';
-import { Label } from '../ui/label';
-import { useCalendar } from '../../contexts/CalendarContext';
-import { CalendarEvent } from '../../types/calendar';
-import { generateId } from '../../utils/dateUtils';
+import React, { useState, useEffect } from "react";
+import { X, Trash2 } from "lucide-react";
+import { Button } from "../ui/button";
+import { Input } from "../ui/input";
+import { Textarea } from "../ui/textarea";
+import { Label } from "../ui/label";
+import { useEventManagement } from "../../hooks/useEventManagement";
+import { CalendarEvent } from "../../types/calendar";
+import { generateId } from "../../utils/dateUtils";
 
 const EventModal: React.FC = () => {
-  const { state, dispatch } = useCalendar();
-  const { isEventModalOpen, editingEvent, selectedDate } = state;
-  
+  const {
+    isEventModalOpen,
+    editingEvent,
+    closeEventModal,
+    addEvent,
+    updateEvent,
+    deleteEvent,
+  } = useEventManagement();
+
   const [formData, setFormData] = useState({
-    title: '',
-    description: '',
-    startDate: '',
-    startTime: '',
-    endDate: '',
-    endTime: '',
+    title: "",
+    description: "",
+    startDate: "",
+    startTime: "",
+    endDate: "",
+    endTime: "",
     allDay: false,
-    color: 'blue' as CalendarEvent['color']
+    color: "blue" as CalendarEvent["color"],
   });
 
   useEffect(() => {
     if (editingEvent) {
       const startDate = new Date(editingEvent.startDate);
       const endDate = new Date(editingEvent.endDate);
-      
+
       setFormData({
         title: editingEvent.title,
-        description: editingEvent.description || '',
-        startDate: startDate.toISOString().split('T')[0],
-        startTime: editingEvent.allDay ? '' : startDate.toTimeString().slice(0, 5),
-        endDate: endDate.toISOString().split('T')[0],
-        endTime: editingEvent.allDay ? '' : endDate.toTimeString().slice(0, 5),
+        description: editingEvent.description || "",
+        startDate: startDate.toISOString().split("T")[0],
+        startTime: editingEvent.allDay
+          ? ""
+          : startDate.toTimeString().slice(0, 5),
+        endDate: endDate.toISOString().split("T")[0],
+        endTime: editingEvent.allDay ? "" : endDate.toTimeString().slice(0, 5),
         allDay: editingEvent.allDay || false,
-        color: editingEvent.color
+        color: editingEvent.color,
       });
-    } else if (selectedDate) {
-      const date = selectedDate.toISOString().split('T')[0];
+    } else {
+      // Set default values for new event
+      const today = new Date().toISOString().split("T")[0];
       setFormData({
-        title: '',
-        description: '',
-        startDate: date,
-        startTime: '09:00',
-        endDate: date,
-        endTime: '10:00',
+        title: "",
+        description: "",
+        startDate: today,
+        startTime: "09:00",
+        endDate: today,
+        endTime: "10:00",
         allDay: false,
-        color: 'blue'
+        color: "blue",
       });
     }
-  }, [editingEvent, selectedDate]);
+  }, [editingEvent]);
 
   const handleClose = () => {
-    dispatch({ type: 'CLOSE_EVENT_MODAL' });
+    closeEventModal();
     setFormData({
-      title: '',
-      description: '',
-      startDate: '',
-      startTime: '',
-      endDate: '',
-      endTime: '',
+      title: "",
+      description: "",
+      startDate: "",
+      startTime: "",
+      endDate: "",
+      endTime: "",
       allDay: false,
-      color: 'blue'
+      color: "blue",
     });
   };
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    
+
     if (!formData.title || !formData.startDate) return;
 
-    const startDateTime = formData.allDay 
-      ? new Date(formData.startDate + 'T00:00')
-      : new Date(formData.startDate + 'T' + formData.startTime);
-    
-    const endDateTime = formData.allDay 
-      ? new Date(formData.endDate + 'T23:59')
-      : new Date(formData.endDate + 'T' + formData.endTime);
+    const startDateTime = formData.allDay
+      ? new Date(formData.startDate + "T00:00")
+      : new Date(formData.startDate + "T" + formData.startTime);
+
+    const endDateTime = formData.allDay
+      ? new Date(formData.endDate + "T23:59")
+      : new Date(formData.endDate + "T" + formData.endTime);
 
     const event: CalendarEvent = {
       id: editingEvent?.id || generateId(),
@@ -87,24 +96,24 @@ const EventModal: React.FC = () => {
       startDate: startDateTime,
       endDate: endDateTime,
       color: formData.color,
-      allDay: formData.allDay
+      allDay: formData.allDay,
     };
 
     if (editingEvent) {
-      dispatch({ type: 'UPDATE_EVENT', payload: event });
+      updateEvent(event);
     } else {
-      dispatch({ type: 'ADD_EVENT', payload: event });
+      addEvent(event);
     }
   };
 
   const handleDelete = () => {
     if (editingEvent) {
-      dispatch({ type: 'DELETE_EVENT', payload: editingEvent.id });
+      deleteEvent(editingEvent.id);
     }
   };
 
   const handleInputChange = (field: keyof typeof formData, value: any) => {
-    setFormData(prev => ({ ...prev, [field]: value }));
+    setFormData((prev) => ({ ...prev, [field]: value }));
   };
 
   if (!isEventModalOpen) return null;
@@ -112,17 +121,17 @@ const EventModal: React.FC = () => {
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center">
       {/* Backdrop */}
-      <div 
+      <div
         className="absolute inset-0 bg-black/50 backdrop-blur-sm"
         onClick={handleClose}
       />
-      
+
       {/* Modal */}
       <div className="relative bg-background rounded-lg shadow-modal w-full max-w-md mx-4 animate-in fade-in-0 zoom-in-95 duration-200">
         {/* Header */}
         <div className="flex items-center justify-between p-6 border-b border-border">
           <h2 className="text-lg font-semibold">
-            {editingEvent ? 'Edit Event' : 'Create Event'}
+            {editingEvent ? "Edit Event" : "Create Event"}
           </h2>
           <Button
             variant="ghost"
@@ -141,7 +150,7 @@ const EventModal: React.FC = () => {
             <Input
               id="title"
               value={formData.title}
-              onChange={(e) => handleInputChange('title', e.target.value)}
+              onChange={(e) => handleInputChange("title", e.target.value)}
               placeholder="Enter event title"
               required
             />
@@ -152,7 +161,7 @@ const EventModal: React.FC = () => {
             <Textarea
               id="description"
               value={formData.description}
-              onChange={(e) => handleInputChange('description', e.target.value)}
+              onChange={(e) => handleInputChange("description", e.target.value)}
               placeholder="Enter event description (optional)"
               rows={3}
             />
@@ -164,7 +173,7 @@ const EventModal: React.FC = () => {
               type="checkbox"
               id="allDay"
               checked={formData.allDay}
-              onChange={(e) => handleInputChange('allDay', e.target.checked)}
+              onChange={(e) => handleInputChange("allDay", e.target.checked)}
               className="rounded border-border"
             />
             <Label htmlFor="allDay">All day event</Label>
@@ -178,11 +187,11 @@ const EventModal: React.FC = () => {
                 type="date"
                 id="startDate"
                 value={formData.startDate}
-                onChange={(e) => handleInputChange('startDate', e.target.value)}
+                onChange={(e) => handleInputChange("startDate", e.target.value)}
                 required
               />
             </div>
-            
+
             {!formData.allDay && (
               <div className="space-y-2">
                 <Label htmlFor="startTime">Start Time</Label>
@@ -190,7 +199,9 @@ const EventModal: React.FC = () => {
                   type="time"
                   id="startTime"
                   value={formData.startTime}
-                  onChange={(e) => handleInputChange('startTime', e.target.value)}
+                  onChange={(e) =>
+                    handleInputChange("startTime", e.target.value)
+                  }
                   required
                 />
               </div>
@@ -204,11 +215,11 @@ const EventModal: React.FC = () => {
                 type="date"
                 id="endDate"
                 value={formData.endDate}
-                onChange={(e) => handleInputChange('endDate', e.target.value)}
+                onChange={(e) => handleInputChange("endDate", e.target.value)}
                 required
               />
             </div>
-            
+
             {!formData.allDay && (
               <div className="space-y-2">
                 <Label htmlFor="endTime">End Time</Label>
@@ -216,7 +227,7 @@ const EventModal: React.FC = () => {
                   type="time"
                   id="endTime"
                   value={formData.endTime}
-                  onChange={(e) => handleInputChange('endTime', e.target.value)}
+                  onChange={(e) => handleInputChange("endTime", e.target.value)}
                   required
                 />
               </div>
@@ -227,19 +238,31 @@ const EventModal: React.FC = () => {
           <div className="space-y-2">
             <Label>Event Color</Label>
             <div className="flex gap-2">
-              {(['blue', 'green', 'red', 'purple', 'orange'] as CalendarEvent['color'][]).map((color) => (
+              {(
+                [
+                  "blue",
+                  "green",
+                  "red",
+                  "purple",
+                  "orange",
+                ] as CalendarEvent["color"][]
+              ).map((color) => (
                 <button
                   key={color}
                   type="button"
-                  onClick={() => handleInputChange('color', color)}
+                  onClick={() => handleInputChange("color", color)}
                   className={`
                     w-8 h-8 rounded-full border-2 transition-all duration-200
-                    ${formData.color === color ? 'border-foreground scale-110' : 'border-transparent hover:scale-105'}
-                    ${color === 'blue' ? 'bg-event-blue' : ''}
-                    ${color === 'green' ? 'bg-event-green' : ''}
-                    ${color === 'red' ? 'bg-event-red' : ''}
-                    ${color === 'purple' ? 'bg-event-purple' : ''}
-                    ${color === 'orange' ? 'bg-event-orange' : ''}
+                    ${
+                      formData.color === color
+                        ? "border-foreground scale-110"
+                        : "border-transparent hover:scale-105"
+                    }
+                    ${color === "blue" ? "bg-event-blue" : ""}
+                    ${color === "green" ? "bg-event-green" : ""}
+                    ${color === "red" ? "bg-event-red" : ""}
+                    ${color === "purple" ? "bg-event-purple" : ""}
+                    ${color === "orange" ? "bg-event-orange" : ""}
                   `}
                 />
               ))}
@@ -262,20 +285,16 @@ const EventModal: React.FC = () => {
                 </Button>
               )}
             </div>
-            
+
             <div className="flex gap-2">
-              <Button
-                type="button"
-                variant="outline"
-                onClick={handleClose}
-              >
+              <Button type="button" variant="outline" onClick={handleClose}>
                 Cancel
               </Button>
               <Button
                 type="submit"
                 className="bg-calendar-primary hover:bg-calendar-primary-hover"
               >
-                {editingEvent ? 'Update' : 'Create'}
+                {editingEvent ? "Update" : "Create"}
               </Button>
             </div>
           </div>
