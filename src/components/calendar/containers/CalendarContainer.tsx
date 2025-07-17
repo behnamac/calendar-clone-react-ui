@@ -2,7 +2,7 @@ import React from "react";
 import { useCalendar } from "../../../contexts/CalendarContext";
 import { CalendarEvent } from "../../../types/calendar";
 import CalendarHeader from "../CalendarHeader";
-import MonthView from "../MonthView";
+import CalendarView from "../CalendarView";
 import EventModal from "../EventModal";
 
 interface CalendarContainerProps {
@@ -84,9 +84,7 @@ export const CalendarContainer: React.FC<CalendarContainerProps> = ({
   return (
     <div className="h-screen flex flex-col bg-background">
       <CalendarHeader />
-      <div className="flex-1 overflow-hidden">
-        <MonthView />
-      </div>
+      <CalendarView />
       <EventModal />
     </div>
   );

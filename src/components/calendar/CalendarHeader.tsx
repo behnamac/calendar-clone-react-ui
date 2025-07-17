@@ -58,7 +58,7 @@ const CalendarHeader: React.FC = () => {
   };
 
   return (
-    <div className="flex items-center justify-between py-4 px-6 border-b border-calendar-border bg-background">
+    <div className="flex flex-col sm:flex-row sm:items-center justify-between py-4 px-6 border-b border-calendar-border bg-background gap-4">
       {/* Left section - Logo and navigation */}
       <div className="flex items-center gap-4">
         <div className="flex items-center gap-2">
@@ -102,15 +102,16 @@ const CalendarHeader: React.FC = () => {
       </div>
 
       {/* Right section - View toggles and create button */}
-      <div className="flex items-center gap-4">
-        <div className="flex items-center bg-muted rounded-lg p-1">
+      <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4">
+        {/* View toggles - Side by side on desktop, stacked on mobile */}
+        <div className="flex items-center bg-muted rounded-lg p-1 w-full sm:w-auto">
           {(["month", "week", "day"] as CalendarView[]).map((view) => (
             <Button
               key={view}
               variant={currentView === view ? "secondary" : "ghost"}
               size="sm"
               onClick={() => handleViewChange(view)}
-              className={`px-4 py-2 text-sm font-medium capitalize transition-smooth ${
+              className={`flex-1 sm:flex-none px-4 py-2 text-sm font-medium capitalize transition-smooth ${
                 currentView === view
                   ? "bg-background shadow-sm"
                   : "hover:bg-calendar-hover"
@@ -123,7 +124,7 @@ const CalendarHeader: React.FC = () => {
 
         <Button
           onClick={handleCreateEvent}
-          className="bg-calendar-primary hover:bg-calendar-primary-hover text-white font-medium"
+          className="bg-calendar-primary hover:bg-calendar-primary-hover text-white font-medium w-full sm:w-auto"
         >
           Create Event
         </Button>

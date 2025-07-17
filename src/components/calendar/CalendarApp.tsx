@@ -3,13 +3,14 @@ import { Calendar } from "./Calendar";
 import { CalendarContainer } from "./containers/CalendarContainer";
 import { CalendarData } from "./CalendarData";
 import { withCalendar } from "./withCalendar";
+import CalendarView from "./CalendarView";
 
 // Example of using Compound Components pattern
 const CalendarApp: React.FC = () => {
   return (
     <Calendar>
       <Calendar.Header />
-      <Calendar.MonthView />
+      <CalendarView />
       <Calendar.EventModal />
     </Calendar>
   );
@@ -83,6 +84,12 @@ const CalendarAppWithRenderProps: React.FC = () => {
                   <option value="week">Week</option>
                   <option value="day">Day</option>
                 </select>
+                <button
+                  onClick={() => openEventModal()}
+                  className="px-4 py-2 bg-calendar-primary text-white rounded-md"
+                >
+                  Create Event
+                </button>
               </div>
             </div>
           </div>
@@ -171,6 +178,12 @@ const CalendarAppWithHOC: React.FC<CalendarAppWithHOCProps> = ({
               <option value="week">Week</option>
               <option value="day">Day</option>
             </select>
+            <button
+              onClick={() => openEventModal()}
+              className="px-4 py-2 bg-calendar-primary text-white rounded-md"
+            >
+              Create Event
+            </button>
           </div>
         </div>
       </div>
