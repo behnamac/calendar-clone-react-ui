@@ -13,7 +13,7 @@ const EventModal: React.FC = () => {
     isEventModalOpen,
     editingEvent,
     closeEventModal,
-    addEvent,
+    createEvent,
     updateEvent,
     deleteEvent,
   } = useEventManagement();
@@ -89,8 +89,7 @@ const EventModal: React.FC = () => {
       ? new Date(formData.endDate + "T23:59")
       : new Date(formData.endDate + "T" + formData.endTime);
 
-    const event: CalendarEvent = {
-      id: editingEvent?.id || generateId(),
+    const eventData = {
       title: formData.title,
       description: formData.description,
       startDate: startDateTime,
@@ -100,9 +99,13 @@ const EventModal: React.FC = () => {
     };
 
     if (editingEvent) {
+      const event: CalendarEvent = {
+        ...eventData,
+        id: editingEvent.id,
+      };
       updateEvent(event);
     } else {
-      addEvent(event);
+      createEvent(eventData);
     }
   };
 
