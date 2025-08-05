@@ -3,6 +3,7 @@ import { CalendarProvider, useCalendar } from "../../contexts/CalendarContext";
 import { useLocalization } from "../../hooks/useLocalization";
 import CalendarView from "./CalendarView";
 import EventModal from "./EventModal";
+import { ThemeToggle } from "../ui/theme-toggle";
 import { CalendarIcon } from "lucide-react";
 
 interface CalendarContextValue {
@@ -110,6 +111,14 @@ const DefaultCalendarHeader: React.FC = () => {
             {localization?.calendar.calendarHeader.viewOptions.day}
           </option>
         </select>
+
+        {/* Theme toggle */}
+        <div className="flex items-center justify-center p-1 rounded-lg bg-muted/50">
+          <ThemeToggle
+            size="sm"
+            className="text-foreground hover:text-calendar-primary transition-colors"
+          />
+        </div>
       </div>
     </div>
   );

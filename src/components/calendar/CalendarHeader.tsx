@@ -141,8 +141,13 @@ const CalendarHeader: React.FC = () => {
           </Select>
         </div>
 
-        {/* Theme toggle */}
-        <ThemeToggle size="sm" />
+        {/* Theme toggle with better styling */}
+        <div className="flex items-center justify-center p-1 rounded-lg bg-muted/50">
+          <ThemeToggle
+            size="md"
+            className="text-foreground hover:text-calendar-primary transition-colors"
+          />
+        </div>
 
         <Button
           onClick={handleCreateEvent}
