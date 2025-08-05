@@ -1,19 +1,21 @@
 import React from "react";
-import CalendarAppFactory, { CalendarPattern } from "./CalendarAppFactory";
+import { Calendar } from "./Calendar";
+import CalendarView from "./CalendarView";
 
 /**
  * Calendar App Component
  *
- * Main entry point for the calendar application. This component
- * demonstrates separation of concerns by delegating to specific
- * pattern implementations through the factory pattern.
+ * Main entry point for the calendar application using the Compound Components pattern.
+ * This provides a clean, composable API for the calendar.
  */
-interface CalendarAppProps {
-  pattern?: CalendarPattern;
-}
-
-const CalendarApp: React.FC<CalendarAppProps> = ({ pattern = "compound" }) => {
-  return <CalendarAppFactory pattern={pattern} />;
+const CalendarApp: React.FC = () => {
+  return (
+    <Calendar>
+      <Calendar.Header />
+      <CalendarView />
+      <Calendar.EventModal />
+    </Calendar>
+  );
 };
 
 export default CalendarApp;
