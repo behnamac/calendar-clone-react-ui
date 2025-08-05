@@ -69,24 +69,33 @@ const CalendarHeader: React.FC = () => {
     openEventModal();
   };
 
+  const viewOptions = [
+    { value: "year", label: localization?.calendar.views.year },
+    { value: "month", label: localization?.calendar.views.month },
+    { value: "week", label: localization?.calendar.views.week },
+    { value: "day", label: localization?.calendar.views.day },
+  ];
+
   return (
     <div className="flex flex-col sm:flex-row sm:items-center justify-between py-4 px-6 border-b border-calendar-border bg-background gap-4">
       {/* Left section - Logo and navigation */}
       <div className="flex items-center gap-4">
         <div className="flex items-center gap-2">
           <CalendarIcon className="h-6 w-6 text-calendar-primary" />
-          <h1 className="text-xl font-semibold text-foreground">{localization?.calendar.title}</h1>
+          <h1 className="text-xl font-semibold text-foreground">
+            {localization?.calendar.title}
+          </h1>
         </div>
 
         <div className="flex items-center gap-1">
-                      <Button
-              variant="outline"
-              size="sm"
-              onClick={navigateToToday}
-              className="text-sm font-medium"
-            >
-              {localization?.calendar.navigation.today}
-            </Button>
+          <Button
+            variant="outline"
+            size="sm"
+            onClick={navigateToToday}
+            className="text-sm font-medium"
+          >
+            {localization?.calendar.navigation.today}
+          </Button>
 
           <div className="flex items-center">
             <Button
@@ -122,10 +131,11 @@ const CalendarHeader: React.FC = () => {
               <SelectValue />
             </SelectTrigger>
             <SelectContent>
-              <SelectItem value="year">{localization?.calendar.views.year}</SelectItem>
-              <SelectItem value="month">{localization?.calendar.views.month}</SelectItem>
-              <SelectItem value="week">{localization?.calendar.views.week}</SelectItem>
-              <SelectItem value="day">{localization?.calendar.views.day}</SelectItem>
+              {viewOptions.map((option) => (
+                <SelectItem key={option.value} value={option.value}>
+                  {option.label}
+                </SelectItem>
+              ))}
             </SelectContent>
           </Select>
         </div>
