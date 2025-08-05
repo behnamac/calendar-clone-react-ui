@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect } from "react";
 
 interface LocalizationData {
   calendar: {
@@ -7,6 +7,8 @@ interface LocalizationData {
       today: string;
       previous: string;
       next: string;
+      previousArrow: string;
+      nextArrow: string;
     };
     views: {
       year: string;
@@ -78,11 +80,20 @@ interface LocalizationData {
       hocView: string;
       totalEvents: string;
     };
+    calendarHeader: {
+      viewOptions: {
+        month: string;
+        week: string;
+        day: string;
+      };
+    };
   };
 }
 
-export const useLocalization = (locale: string = 'en') => {
-  const [localization, setLocalization] = useState<LocalizationData | null>(null);
+export const useLocalization = (locale: string = "en") => {
+  const [localization, setLocalization] = useState<LocalizationData | null>(
+    null
+  );
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
@@ -98,26 +109,88 @@ export const useLocalization = (locale: string = 'en') => {
         setLocalization(data);
         setError(null);
       } catch (err) {
-        setError(err instanceof Error ? err.message : 'Failed to load localization');
+        setError(
+          err instanceof Error ? err.message : "Failed to load localization"
+        );
         // Fallback to default English structure
         setLocalization({
           calendar: {
             title: "Calendar",
-            navigation: { today: "Today", previous: "←", next: "→" },
+            navigation: {
+              today: "Today",
+              previous: "←",
+              next: "→",
+              previousArrow: "←",
+              nextArrow: "→",
+            },
             views: { year: "Year", month: "Month", week: "Week", day: "Day" },
-            actions: { createEvent: "Create Event", editEvent: "Edit Event", update: "Update", create: "Create", cancel: "Cancel", delete: "Delete", addEvent: "Add Event" },
+            actions: {
+              createEvent: "Create Event",
+              editEvent: "Edit Event",
+              update: "Update",
+              create: "Create",
+              cancel: "Cancel",
+              delete: "Delete",
+              addEvent: "Add Event",
+            },
             eventModal: {
-              title: "Event Title", description: "Description", startDate: "Start Date", startTime: "Start Time", endDate: "End Date", endTime: "End Time", allDay: "All day event", eventColor: "Event Color",
-              placeholders: { title: "Enter event title", description: "Enter event description (optional)" },
-              validation: { titleRequired: "Please enter an event title", startDateRequired: "Please select a start date", endDateRequired: "Please select an end date", startTimeRequired: "Please select a start time", endTimeRequired: "Please select an end time", endAfterStart: "End date/time must be after start date/time" }
+              title: "Event Title",
+              description: "Description",
+              startDate: "Start Date",
+              startTime: "Start Time",
+              endDate: "End Date",
+              endTime: "End Time",
+              allDay: "All day event",
+              eventColor: "Event Color",
+              placeholders: {
+                title: "Enter event title",
+                description: "Enter event description (optional)",
+              },
+              validation: {
+                titleRequired: "Please enter an event title",
+                startDateRequired: "Please select a start date",
+                endDateRequired: "Please select an end date",
+                startTimeRequired: "Please select a start time",
+                endTimeRequired: "Please select an end time",
+                endAfterStart: "End date/time must be after start date/time",
+              },
             },
             eventCard: { allDay: "All day" },
-            dayView: { allDayEvents: "All Day Events", eventsToday: "event", eventsTodayPlural: "events today" },
-            months: { january: "January", february: "February", march: "March", april: "April", may: "May", june: "June", july: "July", august: "August", september: "September", october: "October", november: "November", december: "December" },
-            weekDays: { short: ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"], veryShort: ["S", "M", "T", "W", "T", "F", "S"] },
-            errors: { calendarContext: "Calendar components must be used within a Calendar" },
-            demo: { hocView: "HOC Calendar View for", totalEvents: "Total Events:" }
-          }
+            dayView: {
+              allDayEvents: "All Day Events",
+              eventsToday: "event",
+              eventsTodayPlural: "events today",
+            },
+            months: {
+              january: "January",
+              february: "February",
+              march: "March",
+              april: "April",
+              may: "May",
+              june: "June",
+              july: "July",
+              august: "August",
+              september: "September",
+              october: "October",
+              november: "November",
+              december: "December",
+            },
+            weekDays: {
+              short: ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"],
+              veryShort: ["S", "M", "T", "W", "T", "F", "S"],
+            },
+            errors: {
+              calendarContext:
+                "Calendar components must be used within a Calendar",
+            },
+            demo: {
+              hocView: "HOC Calendar View for",
+              totalEvents: "Total Events:",
+            },
+            calendarHeader: {
+              viewOptions: { month: "Month", week: "Week", day: "Day" },
+            },
+          },
         });
       } finally {
         setLoading(false);
@@ -128,4 +201,4 @@ export const useLocalization = (locale: string = 'en') => {
   }, [locale]);
 
   return { localization, loading, error };
-}; 
+};

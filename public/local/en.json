@@ -4,11 +4,13 @@
     "navigation": {
       "today": "Today",
       "previous": "←",
-      "next": "→"
+      "next": "→",
+      "previousArrow": "←",
+      "nextArrow": "→"
     },
     "views": {
       "year": "Year",
-      "month": "Month", 
+      "month": "Month",
       "week": "Week",
       "day": "Day"
     },
@@ -26,7 +28,7 @@
       "description": "Description",
       "startDate": "Start Date",
       "startTime": "Start Time",
-      "endDate": "End Date", 
+      "endDate": "End Date",
       "endTime": "End Time",
       "allDay": "All day event",
       "eventColor": "Event Color",
@@ -53,7 +55,7 @@
     },
     "months": {
       "january": "January",
-      "february": "February", 
+      "february": "February",
       "march": "March",
       "april": "April",
       "may": "May",
@@ -75,6 +77,13 @@
     "demo": {
       "hocView": "HOC Calendar View for",
       "totalEvents": "Total Events:"
+    },
+    "calendarHeader": {
+      "viewOptions": {
+        "month": "Month",
+        "week": "Week",
+        "day": "Day"
+      }
     }
   }
-} 
+}
