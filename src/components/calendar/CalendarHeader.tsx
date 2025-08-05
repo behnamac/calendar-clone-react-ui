@@ -14,9 +14,11 @@ import {
 } from "../ui/select";
 import { useCalendarNavigation } from "../../hooks/useCalendarNavigation";
 import { useEventManagement } from "../../hooks/useEventManagement";
+import { useLocalization } from "../../hooks/useLocalization";
 import { CalendarView } from "../../types/calendar";
 
 const CalendarHeader: React.FC = () => {
+  const { localization } = useLocalization();
   const {
     currentDate,
     currentView,
@@ -73,18 +75,18 @@ const CalendarHeader: React.FC = () => {
       <div className="flex items-center gap-4">
         <div className="flex items-center gap-2">
           <CalendarIcon className="h-6 w-6 text-calendar-primary" />
-          <h1 className="text-xl font-semibold text-foreground">Calendar</h1>
+          <h1 className="text-xl font-semibold text-foreground">{localization?.calendar.title}</h1>
         </div>
 
         <div className="flex items-center gap-1">
-          <Button
-            variant="outline"
-            size="sm"
-            onClick={navigateToToday}
-            className="text-sm font-medium"
-          >
-            Today
-          </Button>
+                      <Button
+              variant="outline"
+              size="sm"
+              onClick={navigateToToday}
+              className="text-sm font-medium"
+            >
+              {localization?.calendar.navigation.today}
+            </Button>
 
           <div className="flex items-center">
             <Button
@@ -120,10 +122,10 @@ const CalendarHeader: React.FC = () => {
               <SelectValue />
             </SelectTrigger>
             <SelectContent>
-              <SelectItem value="year">Year</SelectItem>
-              <SelectItem value="month">Month</SelectItem>
-              <SelectItem value="week">Week</SelectItem>
-              <SelectItem value="day">Day</SelectItem>
+              <SelectItem value="year">{localization?.calendar.views.year}</SelectItem>
+              <SelectItem value="month">{localization?.calendar.views.month}</SelectItem>
+              <SelectItem value="week">{localization?.calendar.views.week}</SelectItem>
+              <SelectItem value="day">{localization?.calendar.views.day}</SelectItem>
             </SelectContent>
           </Select>
         </div>
@@ -132,7 +134,7 @@ const CalendarHeader: React.FC = () => {
           onClick={handleCreateEvent}
           className="bg-calendar-primary hover:bg-calendar-primary-hover text-white font-medium w-full sm:w-auto"
         >
-          Create Event
+          {localization?.calendar.actions.createEvent}
         </Button>
       </div>
     </div>

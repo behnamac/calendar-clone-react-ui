@@ -1,10 +1,12 @@
 import React from "react";
 import { useEventManagement } from "../../hooks/useEventManagement";
 import { useCalendarNavigation } from "../../hooks/useCalendarNavigation";
+import { useLocalization } from "../../hooks/useLocalization";
 import { CalendarEvent } from "../../types/calendar";
 import { isToday } from "../../utils/dateUtils";
 
 const YearView: React.FC = () => {
+  const { localization } = useLocalization();
   const { events, getEventsForDate, openEventModal } = useEventManagement();
   const { currentDate, navigateToMonth } = useCalendarNavigation();
 
@@ -39,18 +41,18 @@ const YearView: React.FC = () => {
 
   const renderMonth = (month: number) => {
     const monthNames = [
-      "January",
-      "February",
-      "March",
-      "April",
-      "May",
-      "June",
-      "July",
-      "August",
-      "September",
-      "October",
-      "November",
-      "December",
+      localization?.calendar.months.january || "January",
+      localization?.calendar.months.february || "February",
+      localization?.calendar.months.march || "March",
+      localization?.calendar.months.april || "April",
+      localization?.calendar.months.may || "May",
+      localization?.calendar.months.june || "June",
+      localization?.calendar.months.july || "July",
+      localization?.calendar.months.august || "August",
+      localization?.calendar.months.september || "September",
+      localization?.calendar.months.october || "October",
+      localization?.calendar.months.november || "November",
+      localization?.calendar.months.december || "December",
     ];
 
     const daysInMonth = getDaysInMonth(currentYear, month);
@@ -128,7 +130,7 @@ const YearView: React.FC = () => {
         </h3>
         <div className="grid grid-cols-7 gap-0.5">
           {/* Day headers */}
-          {["S", "M", "T", "W", "T", "F", "S"].map((day) => (
+          {(localization?.calendar.weekDays.veryShort || ["S", "M", "T", "W", "T", "F", "S"]).map((day) => (
             <div
               key={day}
               className="h-5 flex items-center justify-center text-xs font-medium text-muted-foreground"

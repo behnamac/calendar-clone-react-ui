@@ -1,6 +1,7 @@
 import React from "react";
 import { useEventManagement } from "../../hooks/useEventManagement";
 import { useCalendarNavigation } from "../../hooks/useCalendarNavigation";
+import { useLocalization } from "../../hooks/useLocalization";
 import {
   getCalendarDays,
   isDateInCurrentMonth,
@@ -9,11 +10,12 @@ import {
 import EventCard from "./EventCard";
 
 const MonthView: React.FC = () => {
+  const { localization } = useLocalization();
   const { currentDate } = useCalendarNavigation();
   const { events, getEventsForDate, openEventModal } = useEventManagement();
 
   const calendarDays = getCalendarDays(currentDate);
-  const dayNames = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+  const dayNames = localization?.calendar.weekDays.short || ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
 
   const handleDateClick = (date: Date) => {
     openEventModal();

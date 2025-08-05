@@ -3,6 +3,7 @@ import { Calendar } from "./Calendar";
 import { CalendarContainer } from "./containers/CalendarContainer";
 import { CalendarData } from "./CalendarData";
 import { withCalendar } from "./withCalendar";
+import { useLocalization } from "../../hooks/useLocalization";
 import CalendarView from "./CalendarView";
 
 // Example of using Compound Components pattern
@@ -52,6 +53,7 @@ const CalendarAppWithHOC: React.FC<CalendarAppWithHOCProps> = ({
   setView,
   openEventModal,
 }) => {
+  const { localization } = useLocalization();
   return (
     <div className="h-screen flex flex-col bg-background">
       <div className="border-b border-calendar-border">
@@ -73,7 +75,7 @@ const CalendarAppWithHOC: React.FC<CalendarAppWithHOCProps> = ({
               onClick={navigateToToday}
               className="px-4 py-2 bg-calendar-primary text-white rounded-md hover:bg-calendar-primary/90"
             >
-              Today
+              {localization?.calendar.navigation.today}
             </button>
             <h1 className="text-xl font-semibold">
               {currentDate.toLocaleDateString("en-US", {
@@ -88,15 +90,15 @@ const CalendarAppWithHOC: React.FC<CalendarAppWithHOCProps> = ({
               onChange={(e) => setView(e.target.value as any)}
               className="px-3 py-2 border border-calendar-border rounded-md"
             >
-              <option value="month">Month</option>
-              <option value="week">Week</option>
-              <option value="day">Day</option>
+              <option value="month">{localization?.calendar.views.month}</option>
+              <option value="week">{localization?.calendar.views.week}</option>
+              <option value="day">{localization?.calendar.views.day}</option>
             </select>
             <button
               onClick={() => openEventModal()}
               className="px-4 py-2 bg-calendar-primary text-white rounded-md"
             >
-              Create Event
+              {localization?.calendar.actions.createEvent}
             </button>
           </div>
         </div>
@@ -104,8 +106,8 @@ const CalendarAppWithHOC: React.FC<CalendarAppWithHOCProps> = ({
 
       <div className="flex-1 overflow-hidden">
         <div className="p-4">
-          <p>HOC Calendar View for {currentDate.toLocaleDateString()}</p>
-          <p>Total Events: {events.length}</p>
+          <p>{localization?.calendar.demo.hocView} {currentDate.toLocaleDateString()}</p>
+          <p>{localization?.calendar.demo.totalEvents} {events.length}</p>
         </div>
       </div>
     </div>

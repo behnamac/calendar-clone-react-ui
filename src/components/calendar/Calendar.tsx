@@ -1,5 +1,6 @@
 import React, { createContext, useContext } from "react";
 import { CalendarProvider, useCalendar } from "../../contexts/CalendarContext";
+import { useLocalization } from "../../hooks/useLocalization";
 import CalendarView from "./CalendarView";
 import EventModal from "./EventModal";
 
@@ -12,9 +13,10 @@ const CalendarContext = createContext<CalendarContextValue | undefined>(
 );
 
 export const useCalendarContext = () => {
+  const { localization } = useLocalization();
   const context = useContext(CalendarContext);
   if (!context) {
-    throw new Error("Calendar components must be used within a Calendar");
+    throw new Error(localization?.calendar.errors.calendarContext || "Calendar components must be used within a Calendar");
   }
   return context;
 };

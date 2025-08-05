@@ -1,6 +1,7 @@
 import React from 'react';
 import { CalendarEvent } from '../../types/calendar';
 import { formatTime } from '../../utils/dateUtils';
+import { useLocalization } from '../../hooks/useLocalization';
 
 interface EventCardProps {
   event: CalendarEvent;
@@ -9,6 +10,7 @@ interface EventCardProps {
 }
 
 const EventCard: React.FC<EventCardProps> = ({ event, isCompact = false, onClick }) => {
+  const { localization } = useLocalization();
   const getEventColorClasses = (color: CalendarEvent['color']) => {
     const colorMap = {
       blue: 'bg-event-blue text-white',
@@ -62,7 +64,7 @@ const EventCard: React.FC<EventCardProps> = ({ event, isCompact = false, onClick
       
       {event.allDay && (
         <div className="text-xs opacity-90 mb-1">
-          All day
+          {localization?.calendar.eventCard.allDay}
         </div>
       )}
       

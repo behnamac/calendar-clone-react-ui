@@ -1,15 +1,17 @@
 import React from "react";
 import { useEventManagement } from "../../hooks/useEventManagement";
 import { useCalendarNavigation } from "../../hooks/useCalendarNavigation";
+import { useLocalization } from "../../hooks/useLocalization";
 import { isToday } from "../../utils/dateUtils";
 import EventCard from "./EventCard";
 
 const WeekView: React.FC = () => {
+  const { localization } = useLocalization();
   const { currentDate, getCurrentWeekRange } = useCalendarNavigation();
   const { events, getEventsForDate, openEventModal } = useEventManagement();
 
   const { startOfWeek, endOfWeek } = getCurrentWeekRange();
-  const dayNames = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+  const dayNames = localization?.calendar.weekDays.short || ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
 
   // Generate week days
   const weekDays = [];

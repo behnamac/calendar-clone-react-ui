@@ -1,10 +1,12 @@
 import React from "react";
 import { useEventManagement } from "../../hooks/useEventManagement";
 import { useCalendarNavigation } from "../../hooks/useCalendarNavigation";
+import { useLocalization } from "../../hooks/useLocalization";
 import { isToday } from "../../utils/dateUtils";
 import EventCard from "./EventCard";
 
 const DayView: React.FC = () => {
+  const { localization } = useLocalization();
   const { currentDate } = useCalendarNavigation();
   const { events, getEventsForDate, openEventModal } = useEventManagement();
 
@@ -45,14 +47,14 @@ const DayView: React.FC = () => {
               })}
             </h2>
             <p className="text-muted-foreground">
-              {dayEvents.length} event{dayEvents.length !== 1 ? "s" : ""} today
+              {dayEvents.length} {dayEvents.length !== 1 ? localization?.calendar.dayView.eventsTodayPlural : localization?.calendar.dayView.eventsToday}
             </p>
           </div>
           <button
             onClick={handleDateClick}
             className="px-4 py-2 bg-calendar-primary text-white rounded-md hover:bg-calendar-primary/90"
           >
-            Add Event
+            {localization?.calendar.actions.addEvent}
           </button>
         </div>
       </div>
@@ -101,7 +103,7 @@ const DayView: React.FC = () => {
       {/* All day events */}
       {dayEvents.filter((event) => event.allDay).length > 0 && (
         <div className="border-t border-calendar-border p-4 bg-muted/20">
-          <h3 className="font-medium mb-2">All Day Events</h3>
+          <h3 className="font-medium mb-2">{localization?.calendar.dayView.allDayEvents}</h3>
           <div className="space-y-2">
             {dayEvents
               .filter((event) => event.allDay)
