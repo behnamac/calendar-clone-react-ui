@@ -90,7 +90,9 @@ const CalendarAppWithHOC: React.FC<CalendarAppWithHOCProps> = ({
               onChange={(e) => setView(e.target.value as any)}
               className="px-3 py-2 border border-calendar-border rounded-md"
             >
-              <option value="month">{localization?.calendar.views.month}</option>
+              <option value="month">
+                {localization?.calendar.views.month}
+              </option>
               <option value="week">{localization?.calendar.views.week}</option>
               <option value="day">{localization?.calendar.views.day}</option>
             </select>
@@ -106,8 +108,13 @@ const CalendarAppWithHOC: React.FC<CalendarAppWithHOCProps> = ({
 
       <div className="flex-1 overflow-hidden">
         <div className="p-4">
-          <p>{localization?.calendar.demo.hocView} {currentDate.toLocaleDateString()}</p>
-          <p>{localization?.calendar.demo.totalEvents} {events.length}</p>
+          <p>
+            {localization?.calendar.demo.hocView}{" "}
+            {currentDate.toLocaleDateString()}
+          </p>
+          <p>
+            {localization?.calendar.demo.totalEvents} {events.length}
+          </p>
         </div>
       </div>
     </div>

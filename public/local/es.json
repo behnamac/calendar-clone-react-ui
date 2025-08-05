@@ -1,0 +1,80 @@
+{
+  "calendar": {
+    "title": "Calendario",
+    "navigation": {
+      "today": "Hoy",
+      "previous": "←",
+      "next": "→"
+    },
+    "views": {
+      "year": "Año",
+      "month": "Mes", 
+      "week": "Semana",
+      "day": "Día"
+    },
+    "actions": {
+      "createEvent": "Crear Evento",
+      "editEvent": "Editar Evento",
+      "update": "Actualizar",
+      "create": "Crear",
+      "cancel": "Cancelar",
+      "delete": "Eliminar",
+      "addEvent": "Agregar Evento"
+    },
+    "eventModal": {
+      "title": "Título del Evento",
+      "description": "Descripción",
+      "startDate": "Fecha de Inicio",
+      "startTime": "Hora de Inicio",
+      "endDate": "Fecha de Fin", 
+      "endTime": "Hora de Fin",
+      "allDay": "Todo el día",
+      "eventColor": "Color del Evento",
+      "placeholders": {
+        "title": "Ingrese el título del evento",
+        "description": "Ingrese la descripción del evento (opcional)"
+      },
+      "validation": {
+        "titleRequired": "Por favor ingrese un título para el evento",
+        "startDateRequired": "Por favor seleccione una fecha de inicio",
+        "endDateRequired": "Por favor seleccione una fecha de fin",
+        "startTimeRequired": "Por favor seleccione una hora de inicio",
+        "endTimeRequired": "Por favor seleccione una hora de fin",
+        "endAfterStart": "La fecha/hora de fin debe ser posterior a la fecha/hora de inicio"
+      }
+    },
+    "eventCard": {
+      "allDay": "Todo el día"
+    },
+    "dayView": {
+      "allDayEvents": "Eventos de Todo el Día",
+      "eventsToday": "evento",
+      "eventsTodayPlural": "eventos hoy"
+    },
+    "months": {
+      "january": "Enero",
+      "february": "Febrero", 
+      "march": "Marzo",
+      "april": "Abril",
+      "may": "Mayo",
+      "june": "Junio",
+      "july": "Julio",
+      "august": "Agosto",
+      "september": "Septiembre",
+      "october": "Octubre",
+      "november": "Noviembre",
+      "december": "Diciembre"
+    },
+    "weekDays": {
+      "short": ["Dom", "Lun", "Mar", "Mié", "Jue", "Vie", "Sáb"],
+      "veryShort": ["D", "L", "M", "X", "J", "V", "S"]
+    },
+    "errors": {
+      "calendarContext": "Los componentes del calendario deben usarse dentro de un Calendario"
+    },
+    "demo": {
+      "hocView": "Vista de Calendario HOC para",
+      "totalEvents": "Total de Eventos:"
+    }
+  }
+} 
