@@ -1,8 +1,7 @@
 import React, { createContext, useContext } from "react";
 import { CalendarProvider, useCalendar } from "../../contexts/CalendarContext";
-import MonthView from "./MonthView";
-import EventModal from "./EventModal";
 import CalendarView from "./CalendarView";
+import EventModal from "./EventModal";
 
 interface CalendarContextValue {
   // This will be provided by the CalendarProvider

@@ -2,6 +2,7 @@ import React from "react";
 import { useEventManagement } from "../../hooks/useEventManagement";
 import { useCalendarNavigation } from "../../hooks/useCalendarNavigation";
 import { CalendarEvent } from "../../types/calendar";
+import { isToday } from "../../utils/dateUtils";
 
 const YearView: React.FC = () => {
   const { events, getEventsForDate, openEventModal } = useEventManagement();
@@ -15,15 +16,6 @@ const YearView: React.FC = () => {
 
   const getFirstDayOfMonth = (year: number, month: number) => {
     return new Date(year, month, 1).getDay();
-  };
-
-  const isToday = (date: Date) => {
-    const today = new Date();
-    return (
-      date.getDate() === today.getDate() &&
-      date.getMonth() === today.getMonth() &&
-      date.getFullYear() === today.getFullYear()
-    );
   };
 
   const isCurrentMonth = (month: number) => {
