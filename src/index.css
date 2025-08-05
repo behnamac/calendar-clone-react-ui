@@ -14,20 +14,20 @@
     --calendar-primary: 210 91% 54%;
     --calendar-primary-hover: 210 91% 48%;
     --calendar-primary-light: 210 91% 97%;
-    
+
     /* Event colors */
     --event-blue: 210 91% 54%;
     --event-green: 142 76% 36%;
     --event-red: 0 84% 60%;
     --event-purple: 262 83% 58%;
     --event-orange: 25 95% 53%;
-    
+
     /* Calendar grid */
     --calendar-border: 220 13% 91%;
     --calendar-hover: 210 40% 98%;
     --calendar-today: 210 91% 97%;
     --calendar-other-month: 220 9% 46%;
-    
+
     /* UI elements */
     --card: 0 0% 100%;
     --card-foreground: 220 9% 25%;
@@ -56,13 +56,23 @@
     --radius: 0.5rem;
 
     /* Shadows */
-    --shadow-calendar: 0 1px 3px 0 hsl(0 0% 0% / 0.1), 0 1px 2px -1px hsl(0 0% 0% / 0.1);
+    --shadow-calendar: 0 1px 3px 0 hsl(0 0% 0% / 0.1),
+      0 1px 2px -1px hsl(0 0% 0% / 0.1);
     --shadow-event: 0 2px 4px 0 hsl(0 0% 0% / 0.1);
-    --shadow-modal: 0 10px 25px -5px hsl(0 0% 0% / 0.1), 0 8px 10px -6px hsl(0 0% 0% / 0.1);
-    
+    --shadow-modal: 0 10px 25px -5px hsl(0 0% 0% / 0.1),
+      0 8px 10px -6px hsl(0 0% 0% / 0.1);
+
     /* Gradients */
-    --gradient-primary: linear-gradient(135deg, hsl(var(--calendar-primary)), hsl(var(--calendar-primary-hover)));
-    --gradient-subtle: linear-gradient(to bottom, hsl(var(--background)), hsl(var(--muted)));
+    --gradient-primary: linear-gradient(
+      135deg,
+      hsl(var(--calendar-primary)),
+      hsl(var(--calendar-primary-hover))
+    );
+    --gradient-subtle: linear-gradient(
+      to bottom,
+      hsl(var(--background)),
+      hsl(var(--muted))
+    );
 
     /* Animations */
     --transition-smooth: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
@@ -88,6 +98,24 @@
   .dark {
     --background: 222.2 84% 4.9%;
     --foreground: 210 40% 98%;
+
+    /* Calendar specific colors - dark mode */
+    --calendar-primary: 210 40% 98%;
+    --calendar-primary-hover: 210 40% 90%;
+    --calendar-primary-light: 210 40% 10%;
+
+    /* Event colors - dark mode */
+    --event-blue: 210 91% 54%;
+    --event-green: 142 76% 36%;
+    --event-red: 0 84% 60%;
+    --event-purple: 262 83% 58%;
+    --event-orange: 25 95% 53%;
+
+    /* Calendar grid - dark mode */
+    --calendar-border: 217.2 32.6% 17.5%;
+    --calendar-hover: 217.2 32.6% 20%;
+    --calendar-today: 210 40% 10%;
+    --calendar-other-month: 215 20.2% 65.1%;
 
     --card: 222.2 84% 4.9%;
     --card-foreground: 210 40% 98%;
@@ -121,6 +149,13 @@
     --sidebar-accent-foreground: 240 4.8% 95.9%;
     --sidebar-border: 240 3.7% 15.9%;
     --sidebar-ring: 217.2 91.2% 59.8%;
+
+    /* Shadows - dark mode */
+    --shadow-calendar: 0 1px 3px 0 hsl(0 0% 0% / 0.3),
+      0 1px 2px -1px hsl(0 0% 0% / 0.3);
+    --shadow-event: 0 2px 4px 0 hsl(0 0% 0% / 0.3);
+    --shadow-modal: 0 10px 25px -5px hsl(0 0% 0% / 0.3),
+      0 8px 10px -6px hsl(0 0% 0% / 0.3);
   }
 }
 

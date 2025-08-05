@@ -12,6 +12,7 @@ import {
   SelectItem,
   SelectValue,
 } from "../ui/select";
+import { ThemeToggle } from "../ui/theme-toggle";
 import { useCalendarNavigation } from "../../hooks/useCalendarNavigation";
 import { useEventManagement } from "../../hooks/useEventManagement";
 import { useLocalization } from "../../hooks/useLocalization";
@@ -122,7 +123,7 @@ const CalendarHeader: React.FC = () => {
         </h2>
       </div>
 
-      {/* Right section - View select and create button */}
+      {/* Right section - View select, theme toggle and create button */}
       <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4">
         {/* View select dropdown */}
         <div className="w-full sm:w-auto min-w-[120px]">
@@ -139,6 +140,9 @@ const CalendarHeader: React.FC = () => {
             </SelectContent>
           </Select>
         </div>
+
+        {/* Theme toggle */}
+        <ThemeToggle size="sm" />
 
         <Button
           onClick={handleCreateEvent}
