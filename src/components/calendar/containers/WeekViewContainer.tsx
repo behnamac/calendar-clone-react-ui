@@ -5,7 +5,7 @@ import { useLocalization } from "@/hooks/useLocalization";
 import { useCurrentTime } from "@/hooks/useCurrentTime";
 import { useTimeFormatting } from "@/hooks/useTimeFormatting";
 import { useWeekEvents } from "@/hooks/useWeekEvents";
-import WeekView from "../presentational/WeekView";
+import WeekView from "@/components/calendar/presentational/WeekView";
 import { CalendarEvent } from "@/types/calendar";
 
 const WeekViewContainer: React.FC = () => {

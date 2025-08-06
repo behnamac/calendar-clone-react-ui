@@ -1,12 +1,12 @@
 import React from "react";
-import { useEventManagement } from "../../hooks/useEventManagement";
-import { useCalendarNavigation } from "../../hooks/useCalendarNavigation";
-import { useLocalization } from "../../hooks/useLocalization";
+import { useEventManagement } from "@/hooks/useEventManagement";
+import { useCalendarNavigation } from "@/hooks/useCalendarNavigation";
+import { useLocalization } from "@/hooks/useLocalization";
 import {
   getCalendarDays,
   isDateInCurrentMonth,
   isToday,
-} from "../../utils/dateUtils";
+} from "@/utils/dateUtils";
 import EventCard from "./EventCard";
 
 const MonthView: React.FC = () => {

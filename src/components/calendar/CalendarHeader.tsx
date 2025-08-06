@@ -4,20 +4,20 @@ import {
   ChevronRight,
   Calendar as CalendarIcon,
 } from "lucide-react";
-import { Button } from "../ui/button";
+import { Button } from "@/components/ui/button";
 import {
   Select,
   SelectTrigger,
   SelectContent,
   SelectItem,
   SelectValue,
-} from "../ui/select";
-import { ThemeToggle } from "../ui/theme-toggle";
-import { useCalendarNavigation } from "../../hooks/useCalendarNavigation";
-import { useEventManagement } from "../../hooks/useEventManagement";
-import { useLocalization } from "../../hooks/useLocalization";
-import { useHeaderDate } from "../../hooks/useHeaderDate";
-import { CalendarView } from "../../types/calendar";
+} from "@/components/ui/select";
+import { ThemeToggle } from "@/components/ui/theme-toggle";
+import { useCalendarNavigation } from "@/hooks/useCalendarNavigation";
+import { useEventManagement } from "@/hooks/useEventManagement";
+import { useLocalization } from "@/hooks/useLocalization";
+import { useHeaderDate } from "@/hooks/useHeaderDate";
+import { CalendarView } from "@/types/calendar";
 
 const CalendarHeader: React.FC = () => {
   const { localization } = useLocalization();

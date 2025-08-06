@@ -1,14 +1,14 @@
 import React from "react";
 import { X, Trash2 } from "lucide-react";
-import { Button } from "../ui/button";
-import { Input } from "../ui/input";
-import { Textarea } from "../ui/textarea";
-import { Label } from "../ui/label";
-import { useEventManagement } from "../../hooks/useEventManagement";
-import { useLocalization } from "../../hooks/useLocalization";
-import { useEventForm } from "../../hooks/useEventForm";
-import { useEventValidation } from "../../hooks/useEventValidation";
-import { CalendarEvent } from "../../types/calendar";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
+import { Label } from "@/components/ui/label";
+import { useEventManagement } from "@/hooks/useEventManagement";
+import { useLocalization } from "@/hooks/useLocalization";
+import { useEventForm } from "@/hooks/useEventForm";
+import { useEventValidation } from "@/hooks/useEventValidation";
+import { CalendarEvent } from "@/types/calendar";
 import DateTimeInput from "./DateTimeInput";
 import ColorPicker from "./ColorPicker";
 

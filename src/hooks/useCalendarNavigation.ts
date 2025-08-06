@@ -1,6 +1,6 @@
 import { useCallback } from "react";
-import { useCalendar } from "../contexts/CalendarContext";
-import { CalendarView } from "../types/calendar";
+import { useCalendar } from "@/contexts/CalendarContext";
+import { CalendarView } from "@/types/calendar";
 
 export const useCalendarNavigation = () => {
   const { state, actions } = useCalendar();

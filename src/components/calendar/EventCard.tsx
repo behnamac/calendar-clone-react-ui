@@ -1,7 +1,7 @@
 import React from "react";
-import { CalendarEvent } from "../../types/calendar";
-import { formatTime } from "../../utils/dateUtils";
-import { useLocalization } from "../../hooks/useLocalization";
+import { CalendarEvent } from "@/types/calendar";
+import { formatTime } from "@/utils/dateUtils";
+import { useLocalization } from "@/hooks/useLocalization";
 
 interface EventCardProps {
   event: CalendarEvent;
@@ -61,11 +61,15 @@ const EventCard: React.FC<EventCardProps> = ({
       `}
       onClick={onClick}
     >
-      <div className="font-medium text-xs lg:text-sm truncate">{event.title}</div>
+      <div className="font-medium text-xs lg:text-sm truncate">
+        {event.title}
+      </div>
 
       {!event.allDay && (
         <div className="text-xs opacity-90 truncate">
-          <span className="hidden sm:inline">{formatTime(event.startDate)} - {formatTime(event.endDate)}</span>
+          <span className="hidden sm:inline">
+            {formatTime(event.startDate)} - {formatTime(event.endDate)}
+          </span>
           <span className="sm:hidden">{formatTime(event.startDate)}</span>
         </div>
       )}

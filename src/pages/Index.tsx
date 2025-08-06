@@ -1,4 +1,4 @@
-import CalendarApp from '../components/calendar/CalendarApp';
+import CalendarApp from '@/components/calendar/CalendarApp';
 
 const Index = () => {
   return <CalendarApp />;

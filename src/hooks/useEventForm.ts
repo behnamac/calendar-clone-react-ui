@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
-import { CalendarEvent } from "../types/calendar";
-import { useCalendar } from "../contexts/CalendarContext";
+import { CalendarEvent } from "@/types/calendar";
+import { useCalendar } from "@/contexts/CalendarContext";
 
 interface FormData {
   title: string;

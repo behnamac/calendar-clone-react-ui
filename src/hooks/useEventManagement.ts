@@ -1,6 +1,6 @@
 import { useCallback } from "react";
-import { useCalendar } from "../contexts/CalendarContext";
-import { CalendarEvent } from "../types/calendar";
+import { useCalendar } from "@/contexts/CalendarContext";
+import { CalendarEvent } from "@/types/calendar";
 
 export const useEventManagement = () => {
   const { state, actions } = useCalendar();

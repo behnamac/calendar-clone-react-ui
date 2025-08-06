@@ -1,5 +1,5 @@
 import { useReducer, useCallback } from "react";
-import { CalendarEvent, CalendarState, CalendarView } from "../types/calendar";
+import { CalendarEvent, CalendarState, CalendarView } from "@/types/calendar";
 
 type CalendarAction =
   | { type: "SET_CURRENT_DATE"; payload: Date }

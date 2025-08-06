@@ -1,8 +1,8 @@
 import { useEventManagement } from "./useEventManagement";
 import { useCalendarNavigation } from "./useCalendarNavigation";
-import { useCalendar } from "../contexts/CalendarContext";
-import { CalendarEvent } from "../types/calendar";
-import { isToday } from "../utils/dateUtils";
+import { useCalendar } from "@/contexts/CalendarContext";
+import { CalendarEvent } from "@/types/calendar";
+import { isToday } from "@/utils/dateUtils";
 
 export const useYearView = () => {
   const { getEventsForDate } = useEventManagement();

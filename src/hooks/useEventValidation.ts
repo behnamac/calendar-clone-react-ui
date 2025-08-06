@@ -1,4 +1,4 @@
-import { CalendarEvent } from "../types/calendar";
+import { CalendarEvent } from "@/types/calendar";
 import { LocalizationData } from "./useLocalization";
 
 interface FormData {

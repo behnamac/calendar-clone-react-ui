@@ -1,5 +1,5 @@
 import { useCalendarNavigation } from "./useCalendarNavigation";
-import { CalendarView } from "../types/calendar";
+import { CalendarView } from "@/types/calendar";
 
 export const useHeaderDate = () => {
   const {

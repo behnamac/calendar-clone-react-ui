@@ -1,5 +1,5 @@
 import React from "react";
-import { useCalendarNavigation } from "../../hooks/useCalendarNavigation";
+import { useCalendarNavigation } from "@/hooks/useCalendarNavigation";
 import YearView from "./YearView";
 import MonthView from "./MonthView";
 import WeekViewContainer from "./containers/WeekViewContainer";

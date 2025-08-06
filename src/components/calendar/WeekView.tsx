@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
-import { useEventManagement } from "../../hooks/useEventManagement";
-import { useCalendarNavigation } from "../../hooks/useCalendarNavigation";
-import { useLocalization } from "../../hooks/useLocalization";
-import { isToday } from "../../utils/dateUtils";
+import { useEventManagement } from "@/hooks/useEventManagement";
+import { useCalendarNavigation } from "@/hooks/useCalendarNavigation";
+import { useLocalization } from "@/hooks/useLocalization";
+import { isToday } from "@/utils/dateUtils";
 import EventCard from "./EventCard";
 
 const WeekView: React.FC = () => {

@@ -1,6 +1,6 @@
 import React, { createContext, useContext } from "react";
-import { CalendarProvider } from "../../contexts/CalendarContext";
-import { useLocalization } from "../../hooks/useLocalization";
+import { CalendarProvider } from "@/contexts/CalendarContext";
+import { useLocalization } from "@/hooks/useLocalization";
 import CalendarView from "./CalendarView";
 import EventModal from "./EventModal";
 import CalendarHeader from "./CalendarHeader";

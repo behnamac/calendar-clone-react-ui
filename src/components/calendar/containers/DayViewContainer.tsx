@@ -5,7 +5,7 @@ import { useLocalization } from "@/hooks/useLocalization";
 import { useCurrentTime } from "@/hooks/useCurrentTime";
 import { useTimeFormatting } from "@/hooks/useTimeFormatting";
 import { isToday } from "@/utils/dateUtils";
-import DayView from "../presentational/DayView";
+import DayView from "@/components/calendar/presentational/DayView";
 import { CalendarEvent } from "@/types/calendar";
 
 const DayViewContainer: React.FC = () => {

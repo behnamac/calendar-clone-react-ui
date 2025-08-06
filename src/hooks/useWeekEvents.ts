@@ -1,6 +1,6 @@
 import { useEventManagement } from "./useEventManagement";
 import { useCalendarNavigation } from "./useCalendarNavigation";
-import { CalendarEvent } from "../types/calendar";
+import { CalendarEvent } from "@/types/calendar";
 
 interface WeekEventData extends CalendarEvent {
   topPosition: number;

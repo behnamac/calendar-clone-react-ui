@@ -1,10 +1,10 @@
 import React from "react";
-import { useEventManagement } from "../../hooks/useEventManagement";
-import { useCalendarNavigation } from "../../hooks/useCalendarNavigation";
-import { useLocalization } from "../../hooks/useLocalization";
-import { useCalendar } from "../../contexts/CalendarContext";
-import { CalendarEvent } from "../../types/calendar";
-import { isToday } from "../../utils/dateUtils";
+import { useEventManagement } from "@/hooks/useEventManagement";
+import { useCalendarNavigation } from "@/hooks/useCalendarNavigation";
+import { useLocalization } from "@/hooks/useLocalization";
+import { useCalendar } from "@/contexts/CalendarContext";
+import { CalendarEvent } from "@/types/calendar";
+import { isToday } from "@/utils/dateUtils";
 
 const YearView: React.FC = () => {
   const { localization } = useLocalization();
