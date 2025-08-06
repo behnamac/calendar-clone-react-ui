@@ -172,9 +172,9 @@ const EventModal: React.FC = () => {
       />
 
       {/* Modal */}
-      <div className="relative bg-background rounded-lg shadow-modal w-full max-w-md mx-4 animate-in fade-in-0 zoom-in-95 duration-200">
-        {/* Header */}
-        <div className="flex items-center justify-between p-6 border-b border-border">
+              <div className="relative bg-background rounded-lg shadow-modal w-full max-w-md mx-2 sm:mx-4 animate-in fade-in-0 zoom-in-95 duration-200">
+                  {/* Header */}
+          <div className="flex items-center justify-between p-4 lg:p-6 border-b border-border">
           <h2 className="text-lg font-semibold">
             {editingEvent ? localization?.calendar.actions.editEvent : localization?.calendar.actions.createEvent}
           </h2>
@@ -189,7 +189,7 @@ const EventModal: React.FC = () => {
         </div>
 
         {/* Form */}
-        <form onSubmit={handleSubmit} className="p-6 space-y-4">
+                    <form onSubmit={handleSubmit} className="p-4 lg:p-6 space-y-4">
           <div className="space-y-2">
             <Label htmlFor="title">{localization?.calendar.eventModal.title}</Label>
             <Input
@@ -225,7 +225,7 @@ const EventModal: React.FC = () => {
           </div>
 
           {/* Date and time */}
-          <div className="grid grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div className="space-y-2">
               <Label htmlFor="startDate">{localization?.calendar.eventModal.startDate}</Label>
               <Input
@@ -253,7 +253,7 @@ const EventModal: React.FC = () => {
             )}
           </div>
 
-          <div className="grid grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div className="space-y-2">
               <Label htmlFor="endDate">{localization?.calendar.eventModal.endDate}</Label>
               <Input

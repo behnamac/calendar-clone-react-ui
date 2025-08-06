@@ -59,10 +59,10 @@ const DayView: React.FC = () => {
   return (
     <div className="flex flex-col h-full bg-background">
       {/* Day header */}
-      <div className="border-b border-calendar-border p-4">
-        <div className="flex items-center justify-between">
+      <div className="border-b border-calendar-border p-3 lg:p-4">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
           <div>
-            <h2 className="text-2xl font-semibold">
+            <h2 className="text-lg lg:text-2xl font-semibold">
               {currentDate.toLocaleDateString("en-US", {
                 weekday: "long",
                 month: "long",
@@ -70,7 +70,7 @@ const DayView: React.FC = () => {
                 year: "numeric",
               })}
             </h2>
-            <p className="text-muted-foreground">
+            <p className="text-sm lg:text-base text-muted-foreground">
               {dayEvents.length}{" "}
               {dayEvents.length !== 1
                 ? localization?.calendar.dayView.eventsTodayPlural
@@ -79,7 +79,7 @@ const DayView: React.FC = () => {
           </div>
           <button
             onClick={handleDateClick}
-            className="px-4 py-2 bg-calendar-primary dark:text-gray-800 text-white rounded-md hover:bg-calendar-primary/90"
+            className="px-3 py-2 lg:px-4 lg:py-2 bg-calendar-primary dark:text-gray-800 text-white rounded-md hover:bg-calendar-primary/90 text-sm lg:text-base"
           >
             {localization?.calendar.actions.addEvent}
           </button>
@@ -96,7 +96,7 @@ const DayView: React.FC = () => {
               className="flex border-b border-calendar-border min-h-[60px]"
             >
               {/* Time label */}
-              <div className="w-20 p-2 text-sm text-muted-foreground border-r border-calendar-border bg-muted/20">
+              <div className="w-16 lg:w-20 p-2 text-xs lg:text-sm text-muted-foreground border-r border-calendar-border bg-muted/20 flex items-center justify-center">
                 {formatTime(hour)}
               </div>
 
@@ -114,13 +114,13 @@ const DayView: React.FC = () => {
           {/* Current time indicator */}
           {currentTimePosition !== null && (
             <div
-              className="absolute left-20 right-0 z-10 pointer-events-none"
+              className="absolute left-16 lg:left-20 right-0 z-10 pointer-events-none"
               style={{ top: `${currentTimePosition}px` }}
             >
               {/* Red line */}
               <div className="h-0.5 bg-red-500 w-full"></div>
               {/* Red circle on the left */}
-              <div className="absolute -left-2 -top-1.5 w-3 h-3 bg-red-500 rounded-full"></div>
+              <div className="absolute -left-1 lg:-left-2 -top-1.5 w-2 h-2 lg:w-3 lg:h-3 bg-red-500 rounded-full"></div>
             </div>
           )}
 
@@ -144,7 +144,7 @@ const DayView: React.FC = () => {
               return (
                 <div
                   key={event.id}
-                  className="absolute left-20 right-0 mx-2 cursor-pointer"
+                  className="absolute left-16 lg:left-20 right-0 mx-1 lg:mx-2 cursor-pointer"
                   style={{
                     top: `${topPosition}px`,
                     height: `${height}px`,

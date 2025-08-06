@@ -78,12 +78,12 @@ const CalendarHeader: React.FC = () => {
   ];
 
   return (
-    <div className="flex flex-col sm:flex-row sm:items-center justify-between py-4 px-6 border-b border-calendar-border bg-background gap-4">
+    <div className="flex flex-col lg:flex-row lg:items-center justify-between py-3 px-4 lg:py-4 lg:px-6 border-b border-calendar-border bg-background gap-3 lg:gap-4">
       {/* Left section - Logo and navigation */}
-      <div className="flex items-center gap-4">
+      <div className="flex flex-col sm:flex-row sm:items-center gap-3 lg:gap-4">
         <div className="flex items-center gap-2">
-          <CalendarIcon className="h-6 w-6 text-calendar-primary" />
-          <h1 className="text-xl font-semibold text-foreground">
+          <CalendarIcon className="h-5 w-5 lg:h-6 lg:w-6 text-calendar-primary" />
+          <h1 className="text-lg lg:text-xl font-semibold text-foreground">
             {localization?.calendar.title}
           </h1>
         </div>
@@ -93,7 +93,7 @@ const CalendarHeader: React.FC = () => {
             variant="outline"
             size="sm"
             onClick={navigateToToday}
-            className="text-sm font-medium"
+            className="text-xs lg:text-sm font-medium px-2 lg:px-4"
           >
             {localization?.calendar.navigation.today}
           </Button>
@@ -103,35 +103,35 @@ const CalendarHeader: React.FC = () => {
               variant="ghost"
               size="sm"
               onClick={navigatePrevious}
-              className="h-8 w-8 p-0"
+              className="h-7 w-7 lg:h-8 lg:w-8 p-0"
             >
-              <ChevronLeft className="h-4 w-4" />
+              <ChevronLeft className="h-3 w-3 lg:h-4 lg:w-4" />
             </Button>
             <Button
               variant="ghost"
               size="sm"
               onClick={navigateNext}
-              className="h-8 w-8 p-0"
+              className="h-7 w-7 lg:h-8 lg:w-8 p-0"
             >
-              <ChevronRight className="h-4 w-4" />
+              <ChevronRight className="h-3 w-3 lg:h-4 lg:w-4" />
             </Button>
           </div>
         </div>
       </div>
 
       {/* Center section - Date display */}
-      <div className="flex-1 flex justify-center">
-        <h2 className="text-2xl font-semibold text-foreground">
+      <div className="flex-1 flex justify-center order-1 lg:order-none">
+        <h2 className="text-lg lg:text-2xl font-semibold text-foreground text-center">
           {formatHeaderDate()}
         </h2>
       </div>
 
       {/* Right section - View select, theme toggle and create button */}
-      <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4">
+      <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 lg:gap-4">
         {/* View select dropdown */}
-        <div className="w-full sm:w-auto min-w-[120px]">
+        <div className="w-full sm:w-auto min-w-[100px] lg:min-w-[120px]">
           <Select value={currentView} onValueChange={handleViewChange}>
-            <SelectTrigger className="capitalize">
+            <SelectTrigger className="capitalize text-sm">
               <SelectValue />
             </SelectTrigger>
             <SelectContent>
@@ -147,14 +147,14 @@ const CalendarHeader: React.FC = () => {
         {/* Theme toggle with better styling */}
         <div className="flex items-center justify-center p-1 rounded-lg bg-muted/50">
           <ThemeToggle
-            size="md"
+            size="sm"
             className="text-foreground hover:text-calendar-primary transition-colors"
           />
         </div>
 
         <Button
           onClick={handleCreateEvent}
-          className="bg-calendar-primary dark:text-gray-800 hover:bg-calendar-primary-hover text-white font-medium w-full sm:w-auto"
+          className="bg-calendar-primary dark:text-gray-800 hover:bg-calendar-primary-hover text-white font-medium text-sm px-3 lg:px-4"
         >
           {localization?.calendar.actions.createEvent}
         </Button>

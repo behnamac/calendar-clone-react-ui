@@ -15,7 +15,15 @@ const MonthView: React.FC = () => {
   const { events, getEventsForDate, openEventModal } = useEventManagement();
 
   const calendarDays = getCalendarDays(currentDate);
-  const dayNames = localization?.calendar.weekDays.short || ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+  const dayNames = localization?.calendar.weekDays.short || [
+    "Sun",
+    "Mon",
+    "Tue",
+    "Wed",
+    "Thu",
+    "Fri",
+    "Sat",
+  ];
 
   const handleDateClick = (date: Date) => {
     openEventModal();
@@ -33,9 +41,10 @@ const MonthView: React.FC = () => {
         {dayNames.map((day) => (
           <div
             key={day}
-            className="py-3 px-4 text-center text-sm font-medium text-muted-foreground bg-muted/30"
+            className="py-2 lg:py-3 px-1 lg:px-4 text-center text-xs lg:text-sm font-medium text-muted-foreground bg-muted/30"
           >
-            {day}
+            <span className="hidden sm:inline">{day}</span>
+            <span className="sm:hidden">{day.charAt(0)}</span>
           </div>
         ))}
       </div>
@@ -51,7 +60,7 @@ const MonthView: React.FC = () => {
             <div
               key={index}
               className={`
-                border-r border-b border-calendar-border min-h-[120px] p-2 cursor-pointer
+                border-r border-b border-calendar-border min-h-[80px] lg:min-h-[120px] p-1 lg:p-2 cursor-pointer
                 transition-colors duration-200 hover:bg-calendar-hover
                 ${!isCurrentMonth ? "bg-muted/20" : "bg-background"}
                 ${isTodayDate ? "bg-calendar-today" : ""}
@@ -60,7 +69,7 @@ const MonthView: React.FC = () => {
             >
               <div
                 className={`
-                  text-sm font-medium mb-1 w-8 h-8 flex items-center justify-center rounded-full
+                  text-xs lg:text-sm font-medium mb-1 w-6 h-6 lg:w-8 lg:h-8 flex items-center justify-center rounded-full
                   transition-colors duration-200
                   ${
                     !isCurrentMonth

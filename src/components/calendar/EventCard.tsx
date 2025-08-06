@@ -30,7 +30,7 @@ const EventCard: React.FC<EventCardProps> = ({
     return (
       <div
         className={`
-          px-2 py-1 rounded text-xs font-medium cursor-pointer
+          px-1 lg:px-2 py-0.5 lg:py-1 rounded text-xs font-medium cursor-pointer
           transition-all duration-200 hover:shadow-event
           ${getEventColorClasses(event.color)}
         `}
@@ -41,11 +41,11 @@ const EventCard: React.FC<EventCardProps> = ({
       >
         <div className="truncate">
           {!event.allDay && (
-            <span className="opacity-90 mr-1">
+            <span className="opacity-90 mr-1 hidden sm:inline">
               {formatTime(event.startDate)}
             </span>
           )}
-          {event.title}
+          <span className="truncate block">{event.title}</span>
         </div>
       </div>
     );
@@ -54,18 +54,19 @@ const EventCard: React.FC<EventCardProps> = ({
   return (
     <div
       className={`
-        h-full p-2 rounded cursor-pointer shadow-calendar
+        h-full p-1 lg:p-2 rounded cursor-pointer shadow-calendar
         transition-all duration-200 hover:shadow-event hover:scale-[1.01]
         ${getEventColorClasses(event.color)}
         flex flex-col justify-start
       `}
       onClick={onClick}
     >
-      <div className="font-medium text-sm truncate">{event.title}</div>
+      <div className="font-medium text-xs lg:text-sm truncate">{event.title}</div>
 
       {!event.allDay && (
         <div className="text-xs opacity-90 truncate">
-          {formatTime(event.startDate)} - {formatTime(event.endDate)}
+          <span className="hidden sm:inline">{formatTime(event.startDate)} - {formatTime(event.endDate)}</span>
+          <span className="sm:hidden">{formatTime(event.startDate)}</span>
         </div>
       )}
 
@@ -76,7 +77,7 @@ const EventCard: React.FC<EventCardProps> = ({
       )}
 
       {event.description && (
-        <div className="text-xs opacity-80 line-clamp-1 mt-auto">
+        <div className="text-xs opacity-80 line-clamp-1 mt-auto hidden sm:block">
           {event.description}
         </div>
       )}
