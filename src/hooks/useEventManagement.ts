@@ -34,12 +34,20 @@ export const useEventManagement = () => {
   const getEventsForDate = useCallback(
     (date: Date) => {
       return state.events.filter((event) => {
-        const eventDate = new Date(event.startDate);
-        return (
-          eventDate.getDate() === date.getDate() &&
-          eventDate.getMonth() === date.getMonth() &&
-          eventDate.getFullYear() === date.getFullYear()
-        );
+        const eventStart = new Date(event.startDate);
+        const eventEnd = new Date(event.endDate);
+
+        // Check if the given date falls within the event's date range
+        const givenDate = new Date(date);
+        givenDate.setHours(0, 0, 0, 0); // Reset time to start of day
+
+        const startDate = new Date(eventStart);
+        startDate.setHours(0, 0, 0, 0);
+
+        const endDate = new Date(eventEnd);
+        endDate.setHours(0, 0, 0, 0);
+
+        return givenDate >= startDate && givenDate <= endDate;
       });
     },
     [state.events]
