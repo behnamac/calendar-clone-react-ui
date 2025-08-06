@@ -13,9 +13,9 @@ const DayView: React.FC = () => {
   const dayEvents = getEventsForDate(currentDate);
   const isTodayDate = isToday(currentDate);
 
-  // Generate time slots for the day (6 AM to 10 PM)
+  // Generate time slots for the full day (12 AM to 11 PM)
   const timeSlots = [];
-  for (let hour = 6; hour <= 22; hour++) {
+  for (let hour = 0; hour <= 23; hour++) {
     timeSlots.push(hour);
   }
 
@@ -29,7 +29,10 @@ const DayView: React.FC = () => {
   };
 
   const formatTime = (hour: number) => {
-    return hour === 12 ? "12 PM" : hour > 12 ? `${hour - 12} PM` : `${hour} AM`;
+    if (hour === 0) return "12 AM";
+    if (hour === 12) return "12 PM";
+    if (hour > 12) return `${hour - 12} PM`;
+    return `${hour} AM`;
   };
 
   return (
@@ -100,8 +103,8 @@ const DayView: React.FC = () => {
               const endHour = eventEnd.getHours() + eventEnd.getMinutes() / 60;
               const duration = endHour - startHour;
 
-              // Position from top (6 AM = 0, 7 AM = 60px, etc.)
-              const topPosition = (startHour - 6) * 60; // 60px per hour
+              // Position from top (12 AM = 0, 1 AM = 60px, etc.)
+              const topPosition = startHour * 60; // 60px per hour
               const height = Math.max(duration * 60, 30); // Minimum 30px height
 
               return (
