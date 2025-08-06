@@ -8,7 +8,8 @@ import { useEventManagement } from "../../hooks/useEventManagement";
 import { useLocalization } from "../../hooks/useLocalization";
 import { CalendarEvent } from "../../types/calendar";
 import { useCalendar } from "../../contexts/CalendarContext";
-import { FaRegCalendarAlt, FaRegClock } from "react-icons/fa";
+import DateTimeInput from "./DateTimeInput";
+import ColorPicker from "./ColorPicker";
 
 const EventModal: React.FC = () => {
   const { localization } = useLocalization();
@@ -246,161 +247,54 @@ const EventModal: React.FC = () => {
 
           {/* Date and time */}
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-            <div className="space-y-2">
-              <Label htmlFor="startDate">
-                {localization?.calendar.eventModal.startDate}
-              </Label>
-              <div className="relative">
-                <Input
-                  type="date"
-                  id="startDate"
-                  value={formData.startDate}
-                  onChange={(e) =>
-                    handleInputChange("startDate", e.target.value)
-                  }
-                  required
-                  className="pr-10"
-                />
-                <button
-                  type="button"
-                  className="absolute right-2 top-1/2 transform -translate-y-1/2 text-gray-500 hover:text-gray-700"
-                  onClick={() =>
-                    (
-                      document.getElementById("startDate") as HTMLInputElement
-                    )?.showPicker()
-                  }
-                >
-                  <FaRegCalendarAlt className="dark:text-white" />
-                </button>
-              </div>
-            </div>
+            <DateTimeInput
+              type="date"
+              id="startDate"
+              label={localization?.calendar.eventModal.startDate || ""}
+              value={formData.startDate}
+              onChange={(value) => handleInputChange("startDate", value)}
+              required
+            />
 
             {!formData.allDay && (
-              <div className="space-y-2">
-                <Label htmlFor="startTime">
-                  {localization?.calendar.eventModal.startTime}
-                </Label>
-                <div className="relative">
-                  <Input
-                    type="time"
-                    id="startTime"
-                    value={formData.startTime}
-                    onChange={(e) =>
-                      handleInputChange("startTime", e.target.value)
-                    }
-                    required
-                    className="pr-10"
-                  />
-                  <button
-                    type="button"
-                    className="absolute right-2 top-1/2 transform -translate-y-1/2 text-gray-500 hover:text-gray-700"
-                    onClick={() =>
-                      (
-                        document.getElementById("startTime") as HTMLInputElement
-                      )?.showPicker()
-                    }
-                  >
-                    <FaRegClock className="dark:text-white" />
-                  </button>
-                </div>
-              </div>
+              <DateTimeInput
+                type="time"
+                id="startTime"
+                label={localization?.calendar.eventModal.startTime || ""}
+                value={formData.startTime}
+                onChange={(value) => handleInputChange("startTime", value)}
+                required
+              />
             )}
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-            <div className="space-y-2">
-              <Label htmlFor="endDate">
-                {localization?.calendar.eventModal.endDate}
-              </Label>
-              <div className="relative">
-                <Input
-                  type="date"
-                  id="endDate"
-                  value={formData.endDate}
-                  onChange={(e) => handleInputChange("endDate", e.target.value)}
-                  required
-                  className="pr-10"
-                />
-                <button
-                  type="button"
-                  className="absolute right-2 top-1/2 transform -translate-y-1/2 text-gray-500 hover:text-gray-700"
-                  onClick={() =>
-                    (
-                      document.getElementById("endDate") as HTMLInputElement
-                    )?.showPicker()
-                  }
-                >
-                  <FaRegCalendarAlt className="dark:text-white" />
-                </button>
-              </div>
-            </div>
+            <DateTimeInput
+              type="date"
+              id="endDate"
+              label={localization?.calendar.eventModal.endDate || ""}
+              value={formData.endDate}
+              onChange={(value) => handleInputChange("endDate", value)}
+              required
+            />
 
             {!formData.allDay && (
-              <div className="space-y-2">
-                <Label htmlFor="endTime">
-                  {localization?.calendar.eventModal.endTime}
-                </Label>
-                <div className="relative">
-                  <Input
-                    type="time"
-                    id="endTime"
-                    value={formData.endTime}
-                    onChange={(e) =>
-                      handleInputChange("endTime", e.target.value)
-                    }
-                    required
-                    className="pr-10"
-                  />
-                  <button
-                    type="button"
-                    className="absolute right-2 top-1/2 transform -translate-y-1/2 text-gray-500 hover:text-gray-700"
-                    onClick={() =>
-                      (
-                        document.getElementById("endTime") as HTMLInputElement
-                      )?.showPicker()
-                    }
-                  >
-                    <FaRegClock className="dark:text-white" />
-                  </button>
-                </div>
-              </div>
+              <DateTimeInput
+                type="time"
+                id="endTime"
+                label={localization?.calendar.eventModal.endTime || ""}
+                value={formData.endTime}
+                onChange={(value) => handleInputChange("endTime", value)}
+                required
+              />
             )}
           </div>
 
-          {/* Color picker */}
-          <div className="space-y-2">
-            <Label>{localization?.calendar.eventModal.eventColor}</Label>
-            <div className="flex gap-2">
-              {(
-                [
-                  "blue",
-                  "green",
-                  "red",
-                  "purple",
-                  "orange",
-                ] as CalendarEvent["color"][]
-              ).map((color) => (
-                <button
-                  key={color}
-                  type="button"
-                  onClick={() => handleInputChange("color", color)}
-                  className={`
-                    w-8 h-8 rounded-full border-2 transition-all duration-200
-                    ${
-                      formData.color === color
-                        ? "border-foreground scale-110"
-                        : "border-transparent hover:scale-105"
-                    }
-                    ${color === "blue" ? "bg-event-blue" : ""}
-                    ${color === "green" ? "bg-event-green" : ""}
-                    ${color === "red" ? "bg-event-red" : ""}
-                    ${color === "purple" ? "bg-event-purple" : ""}
-                    ${color === "orange" ? "bg-event-orange" : ""}
-                  `}
-                />
-              ))}
-            </div>
-          </div>
+          <ColorPicker
+            selectedColor={formData.color}
+            onColorChange={(color) => handleInputChange("color", color)}
+            label={localization?.calendar.eventModal.eventColor || ""}
+          />
 
           {/* Actions */}
           <div className="flex items-center justify-between pt-4">
