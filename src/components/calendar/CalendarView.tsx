@@ -2,8 +2,8 @@ import React from "react";
 import { useCalendarNavigation } from "../../hooks/useCalendarNavigation";
 import YearView from "./YearView";
 import MonthView from "./MonthView";
-import WeekView from "./WeekView";
-import DayView from "./DayView";
+import WeekViewContainer from "./containers/WeekViewContainer";
+import DayViewContainer from "./containers/DayViewContainer";
 
 const CalendarView: React.FC = () => {
   const { currentView } = useCalendarNavigation();
@@ -15,9 +15,9 @@ const CalendarView: React.FC = () => {
       case "month":
         return <MonthView />;
       case "week":
-        return <WeekView />;
+        return <WeekViewContainer />;
       case "day":
-        return <DayView />;
+        return <DayViewContainer />;
       default:
         return <MonthView />;
     }

@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 
-interface LocalizationData {
+export interface LocalizationData {
   calendar: {
     title: string;
     navigation: {
