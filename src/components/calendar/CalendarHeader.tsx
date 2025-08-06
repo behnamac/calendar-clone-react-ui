@@ -16,51 +16,21 @@ import { ThemeToggle } from "../ui/theme-toggle";
 import { useCalendarNavigation } from "../../hooks/useCalendarNavigation";
 import { useEventManagement } from "../../hooks/useEventManagement";
 import { useLocalization } from "../../hooks/useLocalization";
+import { useHeaderDate } from "../../hooks/useHeaderDate";
 import { CalendarView } from "../../types/calendar";
 
 const CalendarHeader: React.FC = () => {
   const { localization } = useLocalization();
   const {
-    currentDate,
     currentView,
     navigateToToday,
     navigatePrevious,
     navigateNext,
     setView,
-    getCurrentMonthName,
-    getCurrentYear,
-    getCurrentWeekRange,
   } = useCalendarNavigation();
 
   const { openEventModal } = useEventManagement();
-
-  const formatHeaderDate = () => {
-    switch (currentView) {
-      case "year":
-        return getCurrentYear();
-      case "month":
-        return getCurrentMonthName();
-      case "week":
-        const { startOfWeek, endOfWeek } = getCurrentWeekRange();
-        return `${startOfWeek.toLocaleDateString("en-US", {
-          month: "short",
-          day: "numeric",
-        })} - ${endOfWeek.toLocaleDateString("en-US", {
-          month: "short",
-          day: "numeric",
-          year: "numeric",
-        })}`;
-      case "day":
-        return currentDate.toLocaleDateString("en-US", {
-          weekday: "long",
-          month: "long",
-          day: "numeric",
-          year: "numeric",
-        });
-      default:
-        return "";
-    }
-  };
+  const { formatHeaderDate, getViewOptions } = useHeaderDate();
 
   const handleViewChange = (view: CalendarView) => {
     setView(view);
@@ -70,12 +40,7 @@ const CalendarHeader: React.FC = () => {
     openEventModal();
   };
 
-  const viewOptions = [
-    { value: "year", label: localization?.calendar.views.year },
-    { value: "month", label: localization?.calendar.views.month },
-    { value: "week", label: localization?.calendar.views.week },
-    { value: "day", label: localization?.calendar.views.day },
-  ];
+  const viewOptions = getViewOptions(localization);
 
   return (
     <div className="flex flex-col lg:flex-row lg:items-center justify-between py-3 px-4 lg:py-4 lg:px-6 border-b border-calendar-border bg-background gap-3 lg:gap-4">
