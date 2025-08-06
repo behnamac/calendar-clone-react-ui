@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import { X, Trash2 } from "lucide-react";
 import { Button } from "../ui/button";
 import { Input } from "../ui/input";
@@ -6,14 +6,14 @@ import { Textarea } from "../ui/textarea";
 import { Label } from "../ui/label";
 import { useEventManagement } from "../../hooks/useEventManagement";
 import { useLocalization } from "../../hooks/useLocalization";
+import { useEventForm } from "../../hooks/useEventForm";
+import { useEventValidation } from "../../hooks/useEventValidation";
 import { CalendarEvent } from "../../types/calendar";
-import { useCalendar } from "../../contexts/CalendarContext";
 import DateTimeInput from "./DateTimeInput";
 import ColorPicker from "./ColorPicker";
 
 const EventModal: React.FC = () => {
   const { localization } = useLocalization();
-  const { state } = useCalendar();
   const {
     isEventModalOpen,
     editingEvent,
@@ -23,74 +23,14 @@ const EventModal: React.FC = () => {
     deleteEvent,
   } = useEventManagement();
 
-  const [formData, setFormData] = useState({
-    title: "",
-    description: "",
-    startDate: "",
-    startTime: "",
-    endDate: "",
-    endTime: "",
-    allDay: false,
-    color: "blue" as CalendarEvent["color"],
-  });
-
-  // Reset form when modal opens/closes or editingEvent changes
-  useEffect(() => {
-    if (isEventModalOpen) {
-      if (editingEvent) {
-        // Editing existing event - populate form with event data
-        const startDate = new Date(editingEvent.startDate);
-        const endDate = new Date(editingEvent.endDate);
-
-        setFormData({
-          title: editingEvent.title,
-          description: editingEvent.description || "",
-          startDate: startDate.toISOString().split("T")[0],
-          startTime: editingEvent.allDay
-            ? ""
-            : startDate.toTimeString().slice(0, 5),
-          endDate: endDate.toISOString().split("T")[0],
-          endTime: editingEvent.allDay
-            ? ""
-            : endDate.toTimeString().slice(0, 5),
-          allDay: editingEvent.allDay || false,
-          color: editingEvent.color,
-        });
-      } else {
-        // Creating new event - use selected date if available, otherwise empty values
-        const selectedDate = state.selectedDate;
-        const startDate = selectedDate
-          ? selectedDate.toISOString().split("T")[0]
-          : "";
-        const endDate = selectedDate
-          ? selectedDate.toISOString().split("T")[0]
-          : "";
-
-        setFormData({
-          title: "",
-          description: "",
-          startDate: startDate,
-          startTime: "",
-          endDate: endDate,
-          endTime: "",
-          allDay: false,
-          color: "blue",
-        });
-      }
-    } else {
-      // Modal is closed - reset form to empty state
-      setFormData({
-        title: "",
-        description: "",
-        startDate: "",
-        startTime: "",
-        endDate: "",
-        endTime: "",
-        allDay: false,
-        color: "blue",
-      });
-    }
-  }, [isEventModalOpen, editingEvent, state.selectedDate]);
+  const { formData, handleInputChange } = useEventForm(
+    editingEvent,
+    isEventModalOpen
+  );
+  const { validateForm, createEventData } = useEventValidation(
+    formData,
+    localization
+  );
 
   const handleClose = () => {
     closeEventModal();
@@ -100,56 +40,13 @@ const EventModal: React.FC = () => {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
 
-    // Validate required fields
-    if (!formData.title.trim()) {
-      alert(localization?.calendar.eventModal.validation.titleRequired);
+    const validation = validateForm();
+    if (!validation.isValid) {
+      alert(validation.errorMessage);
       return;
     }
 
-    if (!formData.startDate) {
-      alert(localization?.calendar.eventModal.validation.startDateRequired);
-      return;
-    }
-
-    if (!formData.endDate) {
-      alert(localization?.calendar.eventModal.validation.endDateRequired);
-      return;
-    }
-
-    // For non-all-day events, validate time fields
-    if (!formData.allDay) {
-      if (!formData.startTime) {
-        alert(localization?.calendar.eventModal.validation.startTimeRequired);
-        return;
-      }
-      if (!formData.endTime) {
-        alert(localization?.calendar.eventModal.validation.endTimeRequired);
-        return;
-      }
-    }
-
-    const startDateTime = formData.allDay
-      ? new Date(formData.startDate + "T00:00")
-      : new Date(formData.startDate + "T" + formData.startTime);
-
-    const endDateTime = formData.allDay
-      ? new Date(formData.endDate + "T23:59")
-      : new Date(formData.endDate + "T" + formData.endTime);
-
-    // Validate that end date/time is after start date/time
-    if (endDateTime <= startDateTime) {
-      alert(localization?.calendar.eventModal.validation.endAfterStart);
-      return;
-    }
-
-    const eventData = {
-      title: formData.title.trim(),
-      description: formData.description.trim(),
-      startDate: startDateTime,
-      endDate: endDateTime,
-      color: formData.color,
-      allDay: formData.allDay,
-    };
+    const eventData = createEventData();
 
     if (editingEvent) {
       const event: CalendarEvent = {
@@ -166,10 +63,6 @@ const EventModal: React.FC = () => {
     if (editingEvent) {
       deleteEvent(editingEvent.id);
     }
-  };
-
-  const handleInputChange = (field: keyof typeof formData, value: any) => {
-    setFormData((prev) => ({ ...prev, [field]: value }));
   };
 
   if (!isEventModalOpen) return null;
