@@ -2,13 +2,16 @@ import React from "react";
 import { useEventManagement } from "../../hooks/useEventManagement";
 import { useCalendarNavigation } from "../../hooks/useCalendarNavigation";
 import { useLocalization } from "../../hooks/useLocalization";
+import { useCalendar } from "../../contexts/CalendarContext";
 import { CalendarEvent } from "../../types/calendar";
 import { isToday } from "../../utils/dateUtils";
 
 const YearView: React.FC = () => {
   const { localization } = useLocalization();
   const { events, getEventsForDate, openEventModal } = useEventManagement();
-  const { currentDate, navigateToMonth } = useCalendarNavigation();
+  const { currentDate, navigateToMonth, navigateToDate, setView } =
+    useCalendarNavigation();
+  const { actions } = useCalendar();
 
   const currentYear = currentDate.getFullYear();
 
@@ -25,8 +28,12 @@ const YearView: React.FC = () => {
   };
 
   const handleDateClick = (month: number, day: number) => {
-    const clickedDate = new Date(currentYear, month, day);
-    navigateToMonth(month, currentYear);
+    // Create the date properly, ensuring it's the exact day
+    const clickedDate = new Date(currentYear, month, day, 12, 0, 0, 0); // Set to noon to avoid timezone issues
+
+    // Set both view and date directly using actions
+    actions.setView("day");
+    actions.setCurrentDate(clickedDate);
   };
 
   const handleMonthClick = (month: number) => {

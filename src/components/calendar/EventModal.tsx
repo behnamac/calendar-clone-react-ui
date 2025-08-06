@@ -8,9 +8,11 @@ import { useEventManagement } from "../../hooks/useEventManagement";
 import { useLocalization } from "../../hooks/useLocalization";
 import { CalendarEvent } from "../../types/calendar";
 import { generateId } from "../../utils/dateUtils";
+import { useCalendar } from "../../contexts/CalendarContext";
 
 const EventModal: React.FC = () => {
   const { localization } = useLocalization();
+  const { state } = useCalendar();
   const {
     isEventModalOpen,
     editingEvent,
@@ -54,13 +56,21 @@ const EventModal: React.FC = () => {
           color: editingEvent.color,
         });
       } else {
-        // Creating new event - set empty values for clean form
+        // Creating new event - use selected date if available, otherwise empty values
+        const selectedDate = state.selectedDate;
+        const startDate = selectedDate
+          ? selectedDate.toISOString().split("T")[0]
+          : "";
+        const endDate = selectedDate
+          ? selectedDate.toISOString().split("T")[0]
+          : "";
+
         setFormData({
           title: "",
           description: "",
-          startDate: "",
+          startDate: startDate,
           startTime: "",
-          endDate: "",
+          endDate: endDate,
           endTime: "",
           allDay: false,
           color: "blue",
@@ -79,7 +89,7 @@ const EventModal: React.FC = () => {
         color: "blue",
       });
     }
-  }, [isEventModalOpen, editingEvent]);
+  }, [isEventModalOpen, editingEvent, state.selectedDate]);
 
   const handleClose = () => {
     closeEventModal();
@@ -172,11 +182,13 @@ const EventModal: React.FC = () => {
       />
 
       {/* Modal */}
-              <div className="relative bg-background rounded-lg shadow-modal w-full max-w-md mx-2 sm:mx-4 animate-in fade-in-0 zoom-in-95 duration-200">
-                  {/* Header */}
-          <div className="flex items-center justify-between p-4 lg:p-6 border-b border-border">
+      <div className="relative bg-background rounded-lg shadow-modal w-full max-w-md mx-2 sm:mx-4 animate-in fade-in-0 zoom-in-95 duration-200">
+        {/* Header */}
+        <div className="flex items-center justify-between p-4 lg:p-6 border-b border-border">
           <h2 className="text-lg font-semibold">
-            {editingEvent ? localization?.calendar.actions.editEvent : localization?.calendar.actions.createEvent}
+            {editingEvent
+              ? localization?.calendar.actions.editEvent
+              : localization?.calendar.actions.createEvent}
           </h2>
           <Button
             variant="ghost"
@@ -189,9 +201,11 @@ const EventModal: React.FC = () => {
         </div>
 
         {/* Form */}
-                    <form onSubmit={handleSubmit} className="p-4 lg:p-6 space-y-4">
+        <form onSubmit={handleSubmit} className="p-4 lg:p-6 space-y-4">
           <div className="space-y-2">
-            <Label htmlFor="title">{localization?.calendar.eventModal.title}</Label>
+            <Label htmlFor="title">
+              {localization?.calendar.eventModal.title}
+            </Label>
             <Input
               id="title"
               value={formData.title}
@@ -202,12 +216,16 @@ const EventModal: React.FC = () => {
           </div>
 
           <div className="space-y-2">
-            <Label htmlFor="description">{localization?.calendar.eventModal.description}</Label>
+            <Label htmlFor="description">
+              {localization?.calendar.eventModal.description}
+            </Label>
             <Textarea
               id="description"
               value={formData.description}
               onChange={(e) => handleInputChange("description", e.target.value)}
-              placeholder={localization?.calendar.eventModal.placeholders.description}
+              placeholder={
+                localization?.calendar.eventModal.placeholders.description
+              }
               rows={3}
             />
           </div>
@@ -221,13 +239,17 @@ const EventModal: React.FC = () => {
               onChange={(e) => handleInputChange("allDay", e.target.checked)}
               className="rounded border-border"
             />
-            <Label htmlFor="allDay">{localization?.calendar.eventModal.allDay}</Label>
+            <Label htmlFor="allDay">
+              {localization?.calendar.eventModal.allDay}
+            </Label>
           </div>
 
           {/* Date and time */}
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div className="space-y-2">
-              <Label htmlFor="startDate">{localization?.calendar.eventModal.startDate}</Label>
+              <Label htmlFor="startDate">
+                {localization?.calendar.eventModal.startDate}
+              </Label>
               <Input
                 type="date"
                 id="startDate"
@@ -239,7 +261,9 @@ const EventModal: React.FC = () => {
 
             {!formData.allDay && (
               <div className="space-y-2">
-                <Label htmlFor="startTime">{localization?.calendar.eventModal.startTime}</Label>
+                <Label htmlFor="startTime">
+                  {localization?.calendar.eventModal.startTime}
+                </Label>
                 <Input
                   type="time"
                   id="startTime"
@@ -255,7 +279,9 @@ const EventModal: React.FC = () => {
 
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div className="space-y-2">
-              <Label htmlFor="endDate">{localization?.calendar.eventModal.endDate}</Label>
+              <Label htmlFor="endDate">
+                {localization?.calendar.eventModal.endDate}
+              </Label>
               <Input
                 type="date"
                 id="endDate"
@@ -267,7 +293,9 @@ const EventModal: React.FC = () => {
 
             {!formData.allDay && (
               <div className="space-y-2">
-                <Label htmlFor="endTime">{localization?.calendar.eventModal.endTime}</Label>
+                <Label htmlFor="endTime">
+                  {localization?.calendar.eventModal.endTime}
+                </Label>
                 <Input
                   type="time"
                   id="endTime"
@@ -339,7 +367,9 @@ const EventModal: React.FC = () => {
                 type="submit"
                 className="bg-calendar-primary hover:bg-calendar-primary-hover"
               >
-                {editingEvent ? localization?.calendar.actions.update : localization?.calendar.actions.create}
+                {editingEvent
+                  ? localization?.calendar.actions.update
+                  : localization?.calendar.actions.create}
               </Button>
             </div>
           </div>

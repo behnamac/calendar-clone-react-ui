@@ -70,7 +70,10 @@ export const useEventManagement = () => {
   );
 
   const openEventModal = useCallback(
-    (event?: CalendarEvent) => {
+    (event?: CalendarEvent, selectedDate?: Date) => {
+      if (selectedDate) {
+        actions.setSelectedDate(selectedDate);
+      }
       actions.openEventModal(event);
     },
     [actions]
