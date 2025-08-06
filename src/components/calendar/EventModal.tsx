@@ -7,8 +7,8 @@ import { Label } from "../ui/label";
 import { useEventManagement } from "../../hooks/useEventManagement";
 import { useLocalization } from "../../hooks/useLocalization";
 import { CalendarEvent } from "../../types/calendar";
-import { generateId } from "../../utils/dateUtils";
 import { useCalendar } from "../../contexts/CalendarContext";
+import { FaRegCalendarAlt, FaRegClock } from "react-icons/fa";
 
 const EventModal: React.FC = () => {
   const { localization } = useLocalization();
@@ -250,13 +250,29 @@ const EventModal: React.FC = () => {
               <Label htmlFor="startDate">
                 {localization?.calendar.eventModal.startDate}
               </Label>
-              <Input
-                type="date"
-                id="startDate"
-                value={formData.startDate}
-                onChange={(e) => handleInputChange("startDate", e.target.value)}
-                required
-              />
+              <div className="relative">
+                <Input
+                  type="date"
+                  id="startDate"
+                  value={formData.startDate}
+                  onChange={(e) =>
+                    handleInputChange("startDate", e.target.value)
+                  }
+                  required
+                  className="pr-10"
+                />
+                <button
+                  type="button"
+                  className="absolute right-2 top-1/2 transform -translate-y-1/2 text-gray-500 hover:text-gray-700"
+                  onClick={() =>
+                    (
+                      document.getElementById("startDate") as HTMLInputElement
+                    )?.showPicker()
+                  }
+                >
+                  <FaRegCalendarAlt className="dark:text-white" />
+                </button>
+              </div>
             </div>
 
             {!formData.allDay && (
@@ -264,15 +280,29 @@ const EventModal: React.FC = () => {
                 <Label htmlFor="startTime">
                   {localization?.calendar.eventModal.startTime}
                 </Label>
-                <Input
-                  type="time"
-                  id="startTime"
-                  value={formData.startTime}
-                  onChange={(e) =>
-                    handleInputChange("startTime", e.target.value)
-                  }
-                  required
-                />
+                <div className="relative">
+                  <Input
+                    type="time"
+                    id="startTime"
+                    value={formData.startTime}
+                    onChange={(e) =>
+                      handleInputChange("startTime", e.target.value)
+                    }
+                    required
+                    className="pr-10"
+                  />
+                  <button
+                    type="button"
+                    className="absolute right-2 top-1/2 transform -translate-y-1/2 text-gray-500 hover:text-gray-700"
+                    onClick={() =>
+                      (
+                        document.getElementById("startTime") as HTMLInputElement
+                      )?.showPicker()
+                    }
+                  >
+                    <FaRegClock className="dark:text-white" />
+                  </button>
+                </div>
               </div>
             )}
           </div>
@@ -282,13 +312,27 @@ const EventModal: React.FC = () => {
               <Label htmlFor="endDate">
                 {localization?.calendar.eventModal.endDate}
               </Label>
-              <Input
-                type="date"
-                id="endDate"
-                value={formData.endDate}
-                onChange={(e) => handleInputChange("endDate", e.target.value)}
-                required
-              />
+              <div className="relative">
+                <Input
+                  type="date"
+                  id="endDate"
+                  value={formData.endDate}
+                  onChange={(e) => handleInputChange("endDate", e.target.value)}
+                  required
+                  className="pr-10"
+                />
+                <button
+                  type="button"
+                  className="absolute right-2 top-1/2 transform -translate-y-1/2 text-gray-500 hover:text-gray-700"
+                  onClick={() =>
+                    (
+                      document.getElementById("endDate") as HTMLInputElement
+                    )?.showPicker()
+                  }
+                >
+                  <FaRegCalendarAlt className="dark:text-white" />
+                </button>
+              </div>
             </div>
 
             {!formData.allDay && (
@@ -296,13 +340,29 @@ const EventModal: React.FC = () => {
                 <Label htmlFor="endTime">
                   {localization?.calendar.eventModal.endTime}
                 </Label>
-                <Input
-                  type="time"
-                  id="endTime"
-                  value={formData.endTime}
-                  onChange={(e) => handleInputChange("endTime", e.target.value)}
-                  required
-                />
+                <div className="relative">
+                  <Input
+                    type="time"
+                    id="endTime"
+                    value={formData.endTime}
+                    onChange={(e) =>
+                      handleInputChange("endTime", e.target.value)
+                    }
+                    required
+                    className="pr-10"
+                  />
+                  <button
+                    type="button"
+                    className="absolute right-2 top-1/2 transform -translate-y-1/2 text-gray-500 hover:text-gray-700"
+                    onClick={() =>
+                      (
+                        document.getElementById("endTime") as HTMLInputElement
+                      )?.showPicker()
+                    }
+                  >
+                    <FaRegClock className="dark:text-white" />
+                  </button>
+                </div>
               </div>
             )}
           </div>
