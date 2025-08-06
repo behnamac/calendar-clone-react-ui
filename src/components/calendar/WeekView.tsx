@@ -69,7 +69,7 @@ const WeekView: React.FC = () => {
                   transition-colors duration-200
                   ${
                     isTodayDate
-                      ? "bg-calendar-primary text-white"
+                      ? "bg-calendar-primary dark:text-gray-800 text-white"
                       : "text-foreground hover:bg-calendar-hover"
                   }
                 `}

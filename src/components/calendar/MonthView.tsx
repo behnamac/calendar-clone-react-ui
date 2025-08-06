@@ -66,7 +66,7 @@ const MonthView: React.FC = () => {
                     !isCurrentMonth
                       ? "text-calendar-other-month"
                       : isTodayDate
-                      ? "bg-calendar-primary text-white"
+                      ? "bg-calendar-primary dark:text-gray-800 text-white"
                       : "text-foreground hover:bg-calendar-hover"
                   }
                 `}

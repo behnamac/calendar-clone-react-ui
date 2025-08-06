@@ -117,7 +117,10 @@ const CalendarHeader: React.FC = () => {
             </Button>
           </div>
         </div>
+      </div>
 
+      {/* Center section - Date display */}
+      <div className="flex-1 flex justify-center">
         <h2 className="text-2xl font-semibold text-foreground">
           {formatHeaderDate()}
         </h2>
@@ -151,7 +154,7 @@ const CalendarHeader: React.FC = () => {
 
         <Button
           onClick={handleCreateEvent}
-          className="bg-calendar-primary hover:bg-calendar-primary-hover text-white font-medium w-full sm:w-auto"
+          className="bg-calendar-primary dark:text-gray-800 hover:bg-calendar-primary-hover text-white font-medium w-full sm:w-auto"
         >
           {localization?.calendar.actions.createEvent}
         </Button>

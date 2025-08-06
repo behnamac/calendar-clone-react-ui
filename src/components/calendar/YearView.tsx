@@ -80,7 +80,7 @@ const YearView: React.FC = () => {
             hover:bg-calendar-hover transition-colors relative
             ${
               isToday(date)
-                ? "bg-calendar-primary text-white font-semibold"
+                ? "bg-calendar-primary dark:text-gray-800 text-white font-semibold"
                 : ""
             }
             ${

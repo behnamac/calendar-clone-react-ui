@@ -52,7 +52,7 @@ const DayView: React.FC = () => {
           </div>
           <button
             onClick={handleDateClick}
-            className="px-4 py-2 bg-calendar-primary text-white rounded-md hover:bg-calendar-primary/90"
+            className="px-4 py-2 bg-calendar-primary dark:text-gray-800 text-white rounded-md hover:bg-calendar-primary/90"
           >
             {localization?.calendar.actions.addEvent}
           </button>
