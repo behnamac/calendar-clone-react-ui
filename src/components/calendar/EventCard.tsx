@@ -1,7 +1,7 @@
-import React from 'react';
-import { CalendarEvent } from '../../types/calendar';
-import { formatTime } from '../../utils/dateUtils';
-import { useLocalization } from '../../hooks/useLocalization';
+import React from "react";
+import { CalendarEvent } from "../../types/calendar";
+import { formatTime } from "../../utils/dateUtils";
+import { useLocalization } from "../../hooks/useLocalization";
 
 interface EventCardProps {
   event: CalendarEvent;
@@ -9,15 +9,19 @@ interface EventCardProps {
   onClick?: (e: React.MouseEvent) => void;
 }
 
-const EventCard: React.FC<EventCardProps> = ({ event, isCompact = false, onClick }) => {
+const EventCard: React.FC<EventCardProps> = ({
+  event,
+  isCompact = false,
+  onClick,
+}) => {
   const { localization } = useLocalization();
-  const getEventColorClasses = (color: CalendarEvent['color']) => {
+  const getEventColorClasses = (color: CalendarEvent["color"]) => {
     const colorMap = {
-      blue: 'bg-event-blue text-white',
-      green: 'bg-event-green text-white',
-      red: 'bg-event-red text-white',
-      purple: 'bg-event-purple text-white',
-      orange: 'bg-event-orange text-white'
+      blue: "bg-event-blue text-white",
+      green: "bg-event-green text-white",
+      red: "bg-event-red text-white",
+      purple: "bg-event-purple text-white",
+      orange: "bg-event-orange text-white",
     };
     return colorMap[color] || colorMap.blue;
   };
@@ -31,7 +35,9 @@ const EventCard: React.FC<EventCardProps> = ({ event, isCompact = false, onClick
           ${getEventColorClasses(event.color)}
         `}
         onClick={onClick}
-        title={`${event.title}${event.description ? ` - ${event.description}` : ''}`}
+        title={`${event.title}${
+          event.description ? ` - ${event.description}` : ""
+        }`}
       >
         <div className="truncate">
           {!event.allDay && (
@@ -48,28 +54,29 @@ const EventCard: React.FC<EventCardProps> = ({ event, isCompact = false, onClick
   return (
     <div
       className={`
-        p-3 rounded-lg cursor-pointer shadow-calendar
-        transition-all duration-200 hover:shadow-event hover:scale-[1.02]
+        h-full p-2 rounded cursor-pointer shadow-calendar
+        transition-all duration-200 hover:shadow-event hover:scale-[1.01]
         ${getEventColorClasses(event.color)}
+        flex flex-col justify-start
       `}
       onClick={onClick}
     >
-      <div className="font-medium text-sm mb-1">{event.title}</div>
-      
+      <div className="font-medium text-sm truncate">{event.title}</div>
+
       {!event.allDay && (
-        <div className="text-xs opacity-90 mb-1">
+        <div className="text-xs opacity-90 truncate">
           {formatTime(event.startDate)} - {formatTime(event.endDate)}
         </div>
       )}
-      
+
       {event.allDay && (
-        <div className="text-xs opacity-90 mb-1">
+        <div className="text-xs opacity-90">
           {localization?.calendar.eventCard.allDay}
         </div>
       )}
-      
+
       {event.description && (
-        <div className="text-xs opacity-80 line-clamp-2">
+        <div className="text-xs opacity-80 line-clamp-1 mt-auto">
           {event.description}
         </div>
       )}

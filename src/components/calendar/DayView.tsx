@@ -47,7 +47,10 @@ const DayView: React.FC = () => {
               })}
             </h2>
             <p className="text-muted-foreground">
-              {dayEvents.length} {dayEvents.length !== 1 ? localization?.calendar.dayView.eventsTodayPlural : localization?.calendar.dayView.eventsToday}
+              {dayEvents.length}{" "}
+              {dayEvents.length !== 1
+                ? localization?.calendar.dayView.eventsTodayPlural
+                : localization?.calendar.dayView.eventsToday}
             </p>
           </div>
           <button
@@ -62,6 +65,7 @@ const DayView: React.FC = () => {
       {/* Day timeline */}
       <div className="flex-1 overflow-auto">
         <div className="relative">
+          {/* Background time slots */}
           {timeSlots.map((hour) => (
             <div
               key={hour}
@@ -72,23 +76,8 @@ const DayView: React.FC = () => {
                 {formatTime(hour)}
               </div>
 
-              {/* Time slot content */}
-              <div className="flex-1 p-2 relative">
-                {/* Events that start at this hour */}
-                {dayEvents
-                  .filter((event) => {
-                    const eventHour = new Date(event.startDate).getHours();
-                    return eventHour === hour;
-                  })
-                  .map((event) => (
-                    <EventCard
-                      key={event.id}
-                      event={event}
-                      isCompact={false}
-                      onClick={(e) => handleEventClick(event, e)}
-                    />
-                  ))}
-
+              {/* Time slot background */}
+              <div className="flex-1 relative">
                 {/* Click to add event */}
                 <div
                   className="absolute inset-0 cursor-pointer hover:bg-calendar-hover/50 transition-colors"
@@ -97,13 +86,51 @@ const DayView: React.FC = () => {
               </div>
             </div>
           ))}
+
+          {/* Overlay events with proper positioning */}
+          {dayEvents
+            .filter((event) => !event.allDay)
+            .map((event) => {
+              const eventStart = new Date(event.startDate);
+              const eventEnd = new Date(event.endDate);
+
+              // Calculate position and height
+              const startHour =
+                eventStart.getHours() + eventStart.getMinutes() / 60;
+              const endHour = eventEnd.getHours() + eventEnd.getMinutes() / 60;
+              const duration = endHour - startHour;
+
+              // Position from top (6 AM = 0, 7 AM = 60px, etc.)
+              const topPosition = (startHour - 6) * 60; // 60px per hour
+              const height = Math.max(duration * 60, 30); // Minimum 30px height
+
+              return (
+                <div
+                  key={event.id}
+                  className="absolute left-20 right-0 mx-2 cursor-pointer"
+                  style={{
+                    top: `${topPosition}px`,
+                    height: `${height}px`,
+                  }}
+                  onClick={(e) => handleEventClick(event, e)}
+                >
+                  <EventCard
+                    event={event}
+                    isCompact={false}
+                    onClick={(e) => handleEventClick(event, e)}
+                  />
+                </div>
+              );
+            })}
         </div>
       </div>
 
       {/* All day events */}
       {dayEvents.filter((event) => event.allDay).length > 0 && (
         <div className="border-t border-calendar-border p-4 bg-muted/20">
-          <h3 className="font-medium mb-2">{localization?.calendar.dayView.allDayEvents}</h3>
+          <h3 className="font-medium mb-2">
+            {localization?.calendar.dayView.allDayEvents}
+          </h3>
           <div className="space-y-2">
             {dayEvents
               .filter((event) => event.allDay)
