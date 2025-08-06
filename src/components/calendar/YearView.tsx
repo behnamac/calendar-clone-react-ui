@@ -61,7 +61,7 @@ const YearView: React.FC = () => {
 
     // Add empty cells for days before the first day of the month
     for (let i = 0; i < firstDayOfMonth; i++) {
-      days.push(<div key={`empty-${i}`} className="h-6" />);
+      days.push(<div key={`empty-${i}`} className="h-5 lg:h-6" />);
     }
 
     // Add cells for each day of the month
@@ -76,7 +76,7 @@ const YearView: React.FC = () => {
           key={day}
           onClick={() => handleDateClick(month, day)}
           className={`
-            h-6 w-6 flex items-center justify-center text-xs cursor-pointer rounded
+            h-5 w-5 lg:h-6 lg:w-6 flex items-center justify-center text-xs cursor-pointer rounded
             hover:bg-calendar-hover transition-colors relative
             ${
               isToday(date)
@@ -117,12 +117,12 @@ const YearView: React.FC = () => {
     return (
       <div
         key={month}
-        className="bg-background border border-calendar-border rounded-lg p-3 hover:shadow-md transition-shadow cursor-pointer"
+        className="bg-background border border-calendar-border rounded-lg p-2 lg:p-3 hover:shadow-md transition-shadow cursor-pointer min-h-[200px] lg:min-h-[220px]"
         onClick={() => handleMonthClick(month)}
       >
         <h3
           className={`
-          text-sm font-semibold mb-2 text-center transition-colors
+          text-xs lg:text-sm font-semibold mb-2 text-center transition-colors
           ${isCurrentMonth(month) ? "text-calendar-primary" : "text-foreground"}
         `}
         >
@@ -130,10 +130,20 @@ const YearView: React.FC = () => {
         </h3>
         <div className="grid grid-cols-7 gap-0.5">
           {/* Day headers */}
-          {(localization?.calendar.weekDays.veryShort || ["S", "M", "T", "W", "T", "F", "S"]).map((day) => (
+          {(
+            localization?.calendar.weekDays.veryShort || [
+              "S",
+              "M",
+              "T",
+              "W",
+              "T",
+              "F",
+              "S",
+            ]
+          ).map((day) => (
             <div
               key={day}
-              className="h-5 flex items-center justify-center text-xs font-medium text-muted-foreground"
+              className="h-4 lg:h-5 flex items-center justify-center text-xs font-medium text-muted-foreground"
             >
               {day}
             </div>
@@ -146,8 +156,8 @@ const YearView: React.FC = () => {
   };
 
   return (
-    <div className="p-6">
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
+    <div className="p-3 lg:p-6 h-full overflow-auto">
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 lg:gap-4">
         {Array.from({ length: 12 }, (_, month) => renderMonth(month))}
       </div>
     </div>
