@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { useEventManagement } from "../../hooks/useEventManagement";
 import { useCalendarNavigation } from "../../hooks/useCalendarNavigation";
 import { useLocalization } from "../../hooks/useLocalization";
@@ -9,9 +9,30 @@ const DayView: React.FC = () => {
   const { localization } = useLocalization();
   const { currentDate } = useCalendarNavigation();
   const { events, getEventsForDate, openEventModal } = useEventManagement();
+  const [currentTime, setCurrentTime] = useState(new Date());
 
   const dayEvents = getEventsForDate(currentDate);
   const isTodayDate = isToday(currentDate);
+
+  // Update current time every minute
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setCurrentTime(new Date());
+    }, 60000); // Update every minute
+
+    return () => clearInterval(timer);
+  }, []);
+
+  // Calculate current time position
+  const getCurrentTimePosition = () => {
+    if (!isTodayDate) return null;
+
+    const now = currentTime;
+    const currentHour = now.getHours() + now.getMinutes() / 60;
+    return currentHour * 60; // 60px per hour
+  };
+
+  const currentTimePosition = getCurrentTimePosition();
 
   // Generate time slots for the full day (12 AM to 11 PM)
   const timeSlots = [];
@@ -89,6 +110,19 @@ const DayView: React.FC = () => {
               </div>
             </div>
           ))}
+
+          {/* Current time indicator */}
+          {currentTimePosition !== null && (
+            <div
+              className="absolute left-20 right-0 z-10 pointer-events-none"
+              style={{ top: `${currentTimePosition}px` }}
+            >
+              {/* Red line */}
+              <div className="h-0.5 bg-red-500 w-full"></div>
+              {/* Red circle on the left */}
+              <div className="absolute -left-2 -top-1.5 w-3 h-3 bg-red-500 rounded-full"></div>
+            </div>
+          )}
 
           {/* Overlay events with proper positioning */}
           {dayEvents

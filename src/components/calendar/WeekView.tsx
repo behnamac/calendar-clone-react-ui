@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { useEventManagement } from "../../hooks/useEventManagement";
 import { useCalendarNavigation } from "../../hooks/useCalendarNavigation";
 import { useLocalization } from "../../hooks/useLocalization";
@@ -9,9 +9,36 @@ const WeekView: React.FC = () => {
   const { localization } = useLocalization();
   const { currentDate, getCurrentWeekRange } = useCalendarNavigation();
   const { events, getEventsForDate, openEventModal } = useEventManagement();
+  const [currentTime, setCurrentTime] = useState(new Date());
 
   const { startOfWeek, endOfWeek } = getCurrentWeekRange();
-  const dayNames = localization?.calendar.weekDays.short || ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+  const dayNames = localization?.calendar.weekDays.short || [
+    "Sun",
+    "Mon",
+    "Tue",
+    "Wed",
+    "Thu",
+    "Fri",
+    "Sat",
+  ];
+
+  // Update current time every minute
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setCurrentTime(new Date());
+    }, 60000); // Update every minute
+
+    return () => clearInterval(timer);
+  }, []);
+
+  // Calculate current time position
+  const getCurrentTimePosition = () => {
+    const now = currentTime;
+    const currentHour = now.getHours() + now.getMinutes() / 60;
+    return currentHour * 60; // 60px per hour
+  };
+
+  const currentTimePosition = getCurrentTimePosition();
 
   // Generate week days
   const weekDays = [];
@@ -48,7 +75,24 @@ const WeekView: React.FC = () => {
       </div>
 
       {/* Week grid */}
-      <div className="grid grid-cols-7 flex-1">
+      <div className="grid grid-cols-7 flex-1 relative">
+        {/* Current time indicator for today's column */}
+        {currentTimePosition && (
+          <div
+            className="absolute z-10 pointer-events-none"
+            style={{
+              top: `${currentTimePosition}px`,
+              left: `${weekDays.findIndex((day) => isToday(day)) * (100 / 7)}%`,
+              width: `${100 / 7}%`,
+            }}
+          >
+            {/* Red line */}
+            <div className="h-0.5 bg-red-500 w-full"></div>
+            {/* Red circle on the left */}
+            <div className="absolute -left-1 -top-1.5 w-3 h-3 bg-red-500 rounded-full"></div>
+          </div>
+        )}
+
         {weekDays.map((date, index) => {
           const dayEvents = getEventsForDate(date);
           const isTodayDate = isToday(date);
