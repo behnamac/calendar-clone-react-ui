@@ -4,6 +4,7 @@ import { useLocalization } from "@/hooks/useLocalization";
 import CalendarView from "./CalendarView";
 import EventModal from "./EventModal";
 import CalendarHeader from "./CalendarHeader";
+import MobileSidebar from "./MobileSidebar";
 
 interface CalendarContextValue {
   // This will be provided by the CalendarProvider
@@ -33,6 +34,7 @@ export const Calendar: React.FC<CalendarProps> & {
   Header: typeof CalendarHeaderWrapper;
   MonthView: typeof CalendarMonthView;
   EventModal: typeof CalendarEventModal;
+  MobileSidebar: typeof MobileSidebar;
 } = ({ children }) => {
   return (
     <CalendarProvider>
@@ -92,3 +94,4 @@ const DefaultCalendarEventModal: React.FC = () => {
 Calendar.Header = CalendarHeaderWrapper;
 Calendar.MonthView = CalendarMonthView;
 Calendar.EventModal = CalendarEventModal;
+Calendar.MobileSidebar = MobileSidebar;

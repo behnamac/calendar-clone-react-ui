@@ -18,6 +18,7 @@ import { useEventManagement } from "@/hooks/useEventManagement";
 import { useLocalization } from "@/hooks/useLocalization";
 import { useHeaderDate } from "@/hooks/useHeaderDate";
 import { CalendarView } from "@/types/calendar";
+import MobileSidebar from "./MobileSidebar";
 
 const CalendarHeader: React.FC = () => {
   const { localization } = useLocalization();
@@ -44,16 +45,17 @@ const CalendarHeader: React.FC = () => {
 
   return (
     <div className="flex flex-col lg:flex-row lg:items-center justify-between py-3 px-4 lg:py-4 lg:px-6 border-b border-calendar-border bg-background gap-3 lg:gap-4">
-      {/* Left section - Logo and navigation */}
+      {/* Left section - Logo, mobile menu, and navigation */}
       <div className="flex flex-col sm:flex-row sm:items-center gap-3 lg:gap-4">
         <div className="flex items-center gap-2">
+          <MobileSidebar />
           <CalendarIcon className="h-5 w-5 lg:h-6 lg:w-6 text-calendar-primary" />
           <h1 className="text-lg lg:text-xl font-semibold text-foreground">
             {localization?.calendar.title}
           </h1>
         </div>
 
-        <div className="flex items-center gap-1">
+        <div className="hidden lg:flex items-center gap-1">
           <Button
             variant="outline"
             size="sm"
@@ -86,13 +88,13 @@ const CalendarHeader: React.FC = () => {
 
       {/* Center section - Date display */}
       <div className="flex-1 flex justify-center order-1 lg:order-none">
-        <h2 className="text-lg lg:text-2xl font-semibold text-foreground text-center">
+        <h2 className="text-base lg:text-2xl font-semibold text-foreground text-center">
           {formatHeaderDate()}
         </h2>
       </div>
 
-      {/* Right section - View select, theme toggle and create button */}
-      <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 lg:gap-4">
+      {/* Right section - View select, theme toggle and create button (hidden on mobile) */}
+      <div className="hidden lg:flex flex-col sm:flex-row items-stretch sm:items-center gap-3 lg:gap-4">
         {/* View select dropdown */}
         <div className="w-full sm:w-auto min-w-[100px] lg:min-w-[120px]">
           <Select value={currentView} onValueChange={handleViewChange}>
